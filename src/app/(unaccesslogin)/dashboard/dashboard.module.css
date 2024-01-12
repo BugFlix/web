@@ -1,0 +1,103 @@
+
+
+.container{
+    position: absolute;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: stretch;
+    background-color: #fff;
+
+}
+
+.leftWrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.leftSection{
+    width: 150px;
+    padding: 0 8px;
+    height: 100dvh;
+  
+}
+.leftFixedSection{
+    position: fixed;
+    padding: 0 4px;
+    width: inherit;
+    background:#FFFFFF;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+.moduleLine{
+    margin-top: -40px;
+    width: 80%;
+    height: 0;
+ border-top: 1.5px solid #5065A8;
+}
+
+.mainWrapper{
+    display: flex;
+    align-items: flex-start;
+    height: inherit;
+    width: inherit;
+    flex-direction: column;
+}
+
+.mainSectionInner{
+    height: 100%;
+    width: inherit;
+    display: flex;
+
+}
+.main{
+    width: 100%;
+    height: 100%;
+}
+.meuBarSection{
+    position: fixed;
+    width: inherit;
+  
+    background: white;
+    z-index: 99999;
+    height: 60px;
+}
+.menuBarFixedSection{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.menuBtn{
+    display: flex;
+    margin-left: 10px;
+    width: 102px;
+    height: 30px;
+    border-radius: 30px;
+    justify-content: center;
+    color: white;
+    align-items: center;
+    background: #2b2e3a;
+    border: none;
+    flex-direction: column;
+}
+.menuBtn div{
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    overflow: hidden;
+}
+.menuBtn:hover{
+    background: #e4e6ef;
+    color:#2b2e3a;
+    
+}
+.LogoImg{
+
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
