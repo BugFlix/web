@@ -1,0 +1,150 @@
+.postBackground{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    background: white;
+    z-index: 99999;
+    overflow-y: scroll;
+   
+}
+.postContainer{
+
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.buttons{
+position: absolute;
+top: 10px;
+width: 100%;
+display: flex;
+align-items: center;
+gap: 10px;
+height: 30px;
+}
+.closeBtn{
+    width: 16px;
+    height: 16px;
+    margin-left: 20px;
+    background: url("../../../../../../../asset/images/exit.png");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+}
+.fullScreenBtn{
+    width: 16px;
+    height: 16px;
+    background: url("../../../../../../../asset/images/fullscreen.png");
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+}
+.title{
+    margin-top: 30px;
+    margin-left: 70px;
+    font-size: 15px;
+}
+.tagsContainer{
+    position: absolute;
+    top: 150px;
+    margin-left: 70px;
+    display: flex;
+    gap: 10px;
+    left: 0;
+    color: #37352fa6;
+}
+.tagsContainer img{
+    width: 15px;
+    height: 15px;
+}
+.tagsIndex{
+    display: flex;
+}
+.tagCircle{
+    font-size: 13px;
+    height: 15px;
+    width: auto;
+    border-radius: 15px;
+    border: 1px solid #37352fa6;
+    text-align: center;
+    padding: 0 8px;
+}
+.postBy{
+    position: absolute;
+    display: flex;
+    top: 190px;
+    margin-left: 70px;
+    gap: 10px;
+    color: #37352fa6;
+}
+.postBy img{
+    width: 15px;
+    height: 15px;
+}
+.ScrabContainer{
+    position: absolute;
+    margin-top: 220px;
+    width: 100%;
+    height: 500px;
+}
+.scrabBox{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    text-indent: 10px;
+}
+.scrabBox div{
+    width: 99.5%;
+}
+.scrabBox img{
+    margin-left: 20%;
+    width: 60%;
+    
+}
+.postBoxContainer{
+    position: absolute;
+    margin-top: 720px;
+    width: 100%;
+    height: 500px;
+    border-top: 1.5px dashed #AAB3FF;
+}
+.postBox{
+    margin-top: 30px;
+    width: 100%;
+    height: 470px;
+    text-indent: 10px;
+}
+.likeBtn{
+    position: absolute;
+    top: 150px;
+    right: 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+}
+.likeBtn img{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+.likeValue{
+    position: absolute;
+    top: 156px;
+    right: 60px;
+}
+.footer{
+    position: absolute;
+    top: 1230px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+}

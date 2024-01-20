@@ -1,0 +1,9 @@
+.background{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    background: white;
+    z-index: 99999;
+}
