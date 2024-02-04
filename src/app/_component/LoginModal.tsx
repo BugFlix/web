@@ -33,32 +33,32 @@ export default function LoginModal(){
     }
     const onSubmit:FormEventHandler= async(e)=>{
         e.preventDefault()
-        // const nickname="광열"
-        // setIsLogin(true);
-        // setNickname(nickname)
-        // router.push(`/${nickname}/dashboard/home`);
+        const nickname="광열"
+        setIsLogin(true);
+        setNickname(nickname)
+        router.push(`/${nickname}/dashboard/home`);
 
        
-      try{
-        const response = await api.post("/api/v1/auth/login",requestData,{
-            headers:{
-                "Content-Type":"application/json"
-            }
-      })
-      const data:authData= response.data;
-      console.log(data);
-      if (data.accessToken && data.refreshToken) {
-        localStorage.setItem("accestoken", data.accessToken);
-        localStorage.setItem("refreshtoken", data.refreshToken);
-        setIsLogin(true);
-        setNickname(data.nickname)
-        router.push(`/${data.nickname}/dashboard/home`)
+    //   try{
+    //     const response = await api.post("/api/v1/auths/login",requestData,{
+    //         headers:{
+    //             "Content-Type":"application/json"
+    //         }
+    //   })
+    //   const data:authData= response.data;
+    //   console.log(data);
+    //   if (data.accessToken && data.refreshToken) {
+    //     localStorage.setItem("accestoken", data.accessToken);
+    //     localStorage.setItem("refreshtoken", data.refreshToken);
+    //     setIsLogin(true);
+    //     setNickname(data.nickname)
+    //     router.push(`/${data.nickname}/dashboard/home`)
       
         
-      }
-    }catch(error){
-        console.log(error)
-    }
+    //   }
+    // }catch(error){
+    //     console.log(error)
+    // }
     }
     
     return(

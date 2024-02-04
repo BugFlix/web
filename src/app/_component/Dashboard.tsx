@@ -7,6 +7,8 @@ import UnAccessLinkBar from "./unaccesslogin/linkBar";
 import AccessLinkBar from "./accesslogin/linkBar"
 import { AuthContext } from "./Provider/authProvider";
 import { useRouter } from "next/navigation";
+import profile from "@/asset/images/kwang.jpg"
+import Link from "next/link";
 
 type props = {children:ReactNode}
 export default function Dashboard({children}:props){
@@ -15,6 +17,7 @@ export default function Dashboard({children}:props){
   const menuRef = useRef<any>(null);
   const [menubar, setMenubar] = useState(false);
   const [logoimg, setLogo] = useState(true);
+  const [dropMenu,setDropMenu]=useState(false)
   const onHandleLogout=()=>{
     setIsLogin(false)
     router.push("/dashboard/home")
@@ -22,12 +25,14 @@ export default function Dashboard({children}:props){
 
   const onHandleMenubar = () => {
     setMenubar(!menubar);
-    setLogo(!logoimg);
     if (menuRef.current) {
       menuRef.current.style.scrollBehavior = "smooth";
       menuRef.current.scrollTop = !menubar ? 3000 : 0;
     }
   };
+  const handleDropdownMenu = ()=>{
+    setDropMenu((prev)=>!prev)
+  }
 
       return(
           <div className={styles.container}>
@@ -50,8 +55,20 @@ export default function Dashboard({children}:props){
                         </button>
                        
                         {logoimg&& <Image className={styles.LogoImg} src={Logo} alt="Logo"></Image>}
-                        {isLogin && <b>{nickname}</b>}
-                        {isLogin && <button onClick={onHandleLogout}>로그아웃</button>}
+                        <div className={styles.profile_header}>
+                        {isLogin && <button className={styles.notification}></button>}
+                        {isLogin && <b className={styles.nickname}>{nickname}</b>}
+                        {isLogin && <div className={styles.profileCircle}>
+                          <Image src={profile} alt="kwang"/>
+                        </div>}
+                        {isLogin&& <div className={styles.dropdown}>
+                          <button className={styles.dropdownButton} onClick={handleDropdownMenu} style={{rotate:dropMenu?'180deg':'0deg'}}></button>
+                          <div className={styles.dropMenu}  style={{height:dropMenu? '50px':'0px', transition: "0.5s"}}>
+                             <Link href="">마이페이지</Link>
+                            <button onClick={onHandleLogout}>로그아웃</button>
+                          </div>
+                          </div>}</div>
+                        
                       </div>
                     </div>
                   <main className={styles.main}>

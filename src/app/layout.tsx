@@ -17,11 +17,13 @@ export default function RootLayout({
 }: Props) {
   return (
     <html lang="en">
-      <AuthProvider>
+      
+        <AuthProvider>
       <body className={inter.className}> 
         {children}
         </body>
         </AuthProvider>
+        
     </html>
   )
 }

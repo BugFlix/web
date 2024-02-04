@@ -9,7 +9,8 @@ const api = axios.create({
 //가로채기
 api.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accesstoken");
+    const accessToken = localStorage.getItem("accestoken");
+    console.log(accessToken);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -32,12 +33,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        console.log(localStorage.getItem("refreshtoken"));
-        const body = {
-          email: "sgky0511@naver.com",
-          password: "ky4400",
-        };
-        const response = await api.post("/api/v1/auth/reissue", body, {
+        const response = await api.post("/api/v1/auths/reissue", null, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("refreshtoken")}`,
@@ -45,14 +41,25 @@ api.interceptors.response.use(
         });
 
         const newAccessToken = response.data.accessToken;
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("accestoken", newAccessToken);
 
-        //새토큰으로 다시 요청 보냄
+        // Console log to check if the new access token is retrieved successfully
+        console.log("New Access Token:", newAccessToken);
+
+        // Retry the original request with the new access token
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axios(originalRequest);
       } catch (refreshError) {
-        //리프레쉬 토큰이 계속 만료면 로그인으로 이동
+        // Log the error when refreshing the token
+        console.error("Error refreshing token:", refreshError);
+
+        // Redirect to login page or handle the error accordingly
         console.log("Refresh token expired. Redirect to login page.");
+
+        // Clear tokens and redirect to login page
+        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("refreshtoken");
+        window.location.href = "/login"; // Redirect to your login page
       }
     }
 

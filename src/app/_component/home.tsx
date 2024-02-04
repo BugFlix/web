@@ -9,8 +9,37 @@ export default  function Home(){
     const {isLogin,nickname}=useContext(AuthContext)
     const tabRef=useRef<HTMLDivElement>(null)
     const slideRef = useRef<HTMLDivElement>(null);
+    const postTabRef = useRef<HTMLDivElement>(null!);
     const [tabMenu, setTabMenu]=useState("popularTab")
+    const [datePostMenu, setDatePostMenu]=useState("주간")
+    const [upScroll, setUpScroll] = useState(0);
     const router=useRouter()
+    //스크롤 감지 
+    useEffect(() => {
+        if (postTabRef?.current && slideRef?.current) {
+            const handleScroll = () => {
+                const scrollDetection = slideRef.current?.scrollTop as number;
+                if (upScroll < scrollDetection) {
+                  postTabRef.current.style.height="10vh";
+                  postTabRef.current.style.opacity="0"
+                  postTabRef.current.style.transition="0.5s"
+                } else {
+                    postTabRef.current.style.height="25vh"
+                    postTabRef.current.style.opacity="100%"
+                    postTabRef.current.style.transition="0.5s"
+                }
+                setUpScroll(scrollDetection);
+            };
+    
+            slideRef.current.addEventListener("scroll", handleScroll);
+    
+            return () => {
+                slideRef.current?.removeEventListener("scroll", handleScroll);
+            };
+        }
+    }, [postTabRef, slideRef, upScroll])
+    
+
     const onHandleTab=(prev:string)=>{
         setTabMenu(prev);
         if (slideRef.current) {
@@ -46,18 +75,34 @@ export default  function Home(){
         }
         
     }
+    const handlePostTab= (tab:any)=>{
+        setDatePostMenu(tab)
+    }
+    const styleComponent = (tab:any) => {
+        return {
+            borderBottom: datePostMenu === tab ? "1px solid #7e7e80" : "none",
+        };
+      };
     return(
         <div className={styles.moduleBackground} >
             <div className={styles.innerContents}>
-            <div className={styles.postTabContainer}>
+                <div className={styles.postTabContainer} ref={postTabRef}>
                     <div className={styles.postTab}>
                       <div ref={tabRef} className={styles.tabActive}>
                       </div>
                       <section className={styles.popularTab}  onClick={()=> onHandleTab("popularTab")}> 인기포스트</section>
                         <section className={styles.recommendTab } onClick={()=>onHandleTab("recommendTab")}> 추천순</section>
                     </div>
+                    <div className={styles.headerMenu}>
+                    <div style={styleComponent("주간")} onClick={()=>handlePostTab("주간")}>주간</div>
+                    <div style={styleComponent("월간")} onClick={()=>handlePostTab("월간")}>월간</div>
+                    <div style={styleComponent("연간")} onClick={()=>handlePostTab("연간")}>연간</div>
+
+                  </div>
+
                 </div>
                 <div className={styles.collectionWrapper } ref={slideRef}>
+                <div className={styles.collectionContainer}>
                 <ul className={styles.collection} >
                     
                     <div className={styles.wrapper} onClick={onHandlePost}>
@@ -274,8 +319,9 @@ export default  function Home(){
                     </li>
                     </div>
                 </ul>
+                </div>
                 {/* 다른 컴포넌트 */}
-
+                <div className={styles.collectionContainer}>
                 <ul className={styles.collection}>
                     <div className={styles.wrapper}>
                     <li className={styles.previewBox}>
@@ -430,6 +476,7 @@ export default  function Home(){
                     </li>
                     </div>
                 </ul>
+                </div>
                 </div>
             </div>
         </div>
