@@ -1,0 +1,206 @@
+
+
+.container{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    background-image: url("../../asset/images/background.jpg");
+    background-size: cover;
+    background-position: contain;
+}
+
+.leftWrapper{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.leftSection{
+    width: 150px;
+    padding: 0 8px;
+    height: 100dvh;
+  
+}
+.leftFixedSection{
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: inherit;
+    height: 92dvh;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 240px;
+    border-right: 1px solid rgba(113 119 144 / 25%);
+    padding: 26px;
+    overflow: auto;
+    flex-shrink: 0;
+    align-items: left;
+    z-index: 1;
+    background: rgb(255 255 255 / 31%);
+
+}
+.leftFixedSection a{
+    text-decoration: none;
+    color:  rgba(70, 70, 71, 0.78);
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    padding: 10px;
+    gap: 5px;
+    font-size: 14px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+.leftFixedSection img{
+    width: 20px;
+    height: 20px;
+}
+
+.mainWrapper{
+    display: flex;
+    align-items: flex-start;
+    height: inherit;
+    width: inherit;
+    flex-direction: column;
+}
+
+.mainSectionInner{
+    height: 100%;
+    width: inherit;
+    display: flex;
+
+}
+.main{
+    width: 100%;
+    height: 100%;
+}
+.meuBarSection{
+    position: fixed;
+    top: 0;
+    width: inherit;
+    z-index: 1;
+    height: 60px;
+    border-bottom: 1px solid rgba(113 119 144 / 25%);
+
+}
+.menuBarFixedSection{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.menuBtn{
+    display: flex;
+    margin-left: 10px;
+    width: 102px;
+    height: 30px;
+    border-radius: 30px;
+    justify-content: center;
+    color: white;
+    align-items: center;
+    background: #2b2e3a;
+    border: none;
+    flex-direction: column;
+}
+.menuBtn div{
+    position: absolute;
+    width: 30px;
+    height: 15px;
+    overflow: hidden;
+}
+.menuBtn:hover{
+    background: #e4e6ef;
+    color:#2b2e3a;
+    
+}
+.searchBar{
+    height: 30px;
+    display: flex;
+    width: 100px;
+    max-width: 400px;
+    border-radius: 4px;
+    gap: 20px;
+    background: #2c3056;
+    justify-content: center;
+    align-items: center;
+    color: #585872;
+    transition: 0.5s;
+}
+.searchBar:hover{
+    width: 120px;
+    color: beige;
+}
+.iconSearch{
+    background: url(../../asset/images/search.png);
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.LogoImg{
+
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+.profile_header{
+    position: absolute;
+    display: flex;
+    right: 100px;
+    align-items: center;
+    gap: 10px;
+}
+.notification{
+
+    background: url(../../asset/images/notification.png);
+    width: 22px;
+    height: 22px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+}
+.nickname{
+ 
+}
+.profileCircle{
+
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    border: 2px solid rgb(183, 181, 181)
+}
+.profileCircle img{
+    border-radius: 30px;
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+.dropdown{
+    position: absolute;
+    right: 0px;
+    margin-top: 30px;
+}
+.dropdownButton{
+width: 10px;
+height: 10px;
+background: url(../../asset/images/dropdown.png);
+background-position: center center;
+background-size: contain;
+background-repeat: no-repeat;
+border: none;
+}
+.dropMenu{
+    position: absolute;
+    width: 65px;
+    height: 0;
+    overflow: hidden;
+    background: white;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

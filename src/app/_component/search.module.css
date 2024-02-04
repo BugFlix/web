@@ -1,0 +1,54 @@
+.modalBackground {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+}
+.searchContainer{
+    width: 50vw;
+    height: 40vw;
+    border-radius: 30px;
+    min-height: 40vh;
+    overflow: hidden;
+}
+.searchBar{
+    display: flex;
+    border-top-left-radius:  30px;
+    border-top-right-radius:  30px;
+    height: 60px;
+    align-items: center;
+    border-bottom: 2px solid#9858f5;
+}
+.searchBar input{
+    width: 85%;
+    margin-left: 3vw;
+    font-size: 1.1rem;
+    height: 3vw;
+    border: none;
+    border-left: 2px solid #585872;
+    text-indent: 3vw;
+    outline: none;
+    background: transparent;
+}
+.searchBar input::placeholder{
+    color:#e9e5e5;
+    
+}
+.iconSearch{
+    position: absolute;
+    right: 26.5vw;
+    background: url(../../asset/images/search.png); 
+    width: 3vw;
+    height: 3vh;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+}
