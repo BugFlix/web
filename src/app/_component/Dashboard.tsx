@@ -53,7 +53,7 @@ export default function Dashboard({children}:props){
                           <div ref={menuRef}> <span>메뉴</span>
                         <span>닫기</span></div>
                         </button>
-                       
+                        <div className={styles.iconSearch}></div>
                         {logoimg&& <Image className={styles.LogoImg} src={Logo} alt="Logo"></Image>}
                         <div className={styles.profile_header}>
                         {isLogin && <button className={styles.notification}></button>}
