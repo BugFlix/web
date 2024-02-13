@@ -1,0 +1,302 @@
+.container{
+    width: inherit;
+    height: inherit;
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: repeat(2,1fr);
+    @media only screen and (max-width: 1200px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+.profile{
+    width: 100%;
+    height: inherit;
+    background: white;
+}
+.header{
+    width: inherit;
+    display: flex;
+    align-items: center;
+    height: 150px;
+    gap: 20px;
+    border-bottom: 1px solid rgb(219, 219, 219);  
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+
+}
+.profileCircle{
+
+    width: 70px;
+    height: 70px;
+    margin-left: 12.5px;
+    border-radius: 50px;
+    border: 2px solid rgb(183, 181, 181)
+}
+.profileCircle img{
+    border-radius: 50px;
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+.authContainer{
+    width: 300px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+}
+.authContainer b{
+    font-size: 13px;
+}
+.authContainer span{
+    font-size: 12px;
+}
+.followers{
+    gap: 10px;
+    display: flex;
+}
+.followers span{
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+}
+.authContainer a{
+    color: #05d697;
+    font-size: 13px;
+}
+.subTitle{
+    width: 185px;
+}
+.headerTab{
+    width: 100%;
+    height: 50px;
+
+}
+.tabMenu{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.tabMenu div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.tabMenu img{
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+.tabMenu p{
+    font-size: 10px;
+}
+.collectionContainer{
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    height: inherit;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.collection{
+
+    width: 325px;
+    height: inherit;
+    overflow-y: scroll;
+
+}
+
+.wrapper,.singlecard{
+    height: inherit;
+    max-width: 300px;
+}
+.wrapper{
+    perspective: 900px;
+}
+.previewBox{
+    margin-top: 20px;
+    box-sizing: border-box;
+align-items: center;
+display: flex;
+flex-direction: column;
+width: 18vw;
+height:48vh;
+background: #FFFFFF;
+@media only screen and (max-width: 1400px) {
+    width: 24vw;
+    height: 45vh;
+}
+@media only screen and (max-width: 1200px) {
+    width: 40vw;
+}
+@media only screen and (max-width: 800px) {
+    width: 38vw;
+}
+@media only screen and (max-width: 480px) {
+    width: 76vw;
+}
+
+/* main color */
+box-shadow: 0px 0px 25px 7px rgba(170, 179, 255, 0.3);
+border-radius: 16px;
+    transition: all 1.5s cubic-bezier(0.7, -.5, 0.3, 1.8);
+    transform-style: preserve-3d;
+}
+.wrapper:hover .previewBox{
+    transform: rotateY(180deg);
+
+}
+.front,.back{
+    width: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.front{
+     cursor: pointer;
+     height: 100%;
+     backface-visibility: hidden;
+     border-radius: 16px;
+}
+.front img{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 20vh;
+border-radius: 16px 16px 0px 0px;
+
+
+}
+.back{
+    position: absolute;
+    transform: rotateY(180deg);
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    background: #fff;
+}
+.back img{
+    height: 100%;
+    width: 100%;
+    border-radius: 16px;
+}
+.front h3{
+    position: absolute;
+    top: 23vh;
+    font-size: 1vw;
+    font-weight: 600;
+    line-height:1.5;
+    width: 85%;
+    font-family: 'Gaegu', sans-serif;
+}
+
+.content{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: rgba(90, 88, 88, 0.667);
+    backdrop-filter: blur(16px) saturate(120%);
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+.content h3{
+    position:absolute;
+    top: 20px;
+    font-size: 1vw;
+    font-weight: 600;
+    line-height:1.5;
+    color: #b3b3b3;
+    width: 85%;
+    font-family: 'Gaegu', sans-serif;
+}
+.tags{
+    position: absolute;
+    top: 120px;
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-left: 20px;
+    
+
+}
+.tags span{
+    width: 60px;
+    font-size: 12px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    align-items: center;
+    border-radius: 15px;
+    border: #b3b3b3 1px solid;
+    color: #b3b3b3;
+}
+.content p{
+    position: absolute;
+    top: 200px;
+    color: #b3b3b3;
+    width: 85%;
+    height: 5px;
+    font-size: 11px;
+    margin: 0 0 50px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.contentHeader{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-top: 1px solid #f1f3f5;
+
+}
+.postBy{
+    margin-left: 30px;
+}
+.contentHeader span, .contentHeader b{
+    margin-left: 5px;
+    font-size: 12px;
+}
+.contentHeader span{
+    color: #868e96;
+}
+.profileCircle1{
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+}
+.profileCircle1 img{
+    margin-left: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+}
+.likes{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 10vh;
+    right: 15px;
+}
+.likes img{
+    object-fit: contain;
+}
+.likesCount{
+    position: absolute;
+    right: 40px
+}
+.setting{
+    width: 100%;
+    height: inherit;
+    background: yellow;
+}

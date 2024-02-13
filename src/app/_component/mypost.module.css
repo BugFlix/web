@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Noto+Sans+KR&display=swap');
+.moduleBackground{
+    width: inherit;
+    height: inherit;
+    background: #F6F6F6;
+    display: flex;
+
+}
+.innerContents{
+    width: 97%;
+    height: inherit;
+}
+.postTabContainer{
+    width: 99vw;
+    display: flex;
+    justify-content: center;
+    background: #F6F6F6;
+
+}
+.postTab{
+    position: relative;
+    z-index: 1;
+    margin-top: 70px;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    gap: 20px;
+    background: #1a1a1b; 
+
+}
+.postTab section{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    color: #ffffff;
+}
+.tabActive{
+    position: absolute;
+    left: 0;
+    width: 100px;
+    height: 50px;
+    background: #868e96;
+    border-radius: 30px;
+    
+}
+.postTab section:hover{
+    font-size: 14px;
+
+}
+.collectionWrapper{
+    position: relative;
+    display: flex;
+    gap: 70px;
+    justify-content: left;
+    margin-left: 26.5px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.collection{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 55px;
+    width: 100%;
+    height: 100%;
+
+}
+.wrapper,.singlecard{
+    height: 400px;
+    max-width: 300px;
+
+}
+.wrapper{
+    perspective: 900px;
+}
+.previewBox{
+    box-sizing: border-box;
+align-items: center;
+display: flex;
+flex-direction: column;
+width: 319px;
+height: 400px;
+background: #FFFFFF;
+/* main color */
+box-shadow: 0px 0px 25px 7px rgba(170, 179, 255, 0.3);
+border-radius: 16px;
+    transition: all 1.5s cubic-bezier(0.7, -.5, 0.3, 1.8);
+    transform-style: preserve-3d;
+    
+}
+.wrapper:hover .previewBox{
+    transform: rotateY(180deg);
+
+}
+.front,.back{
+    width: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.front{
+     cursor: pointer;
+     height: 100%;
+     backface-visibility: hidden;
+     border-radius: 16px;
+}
+.front img{
+    width: 100%;
+    height: 200px;
+border-radius: 16px 16px 0px 0px;
+
+
+}
+.back{
+    transform: rotateY(180deg);
+    height: 100%;
+    border-radius: 16px;
+    background: #fff;
+}
+.front h3{
+    font-size: 18px;
+    font-weight: 600;
+    line-height:1.5;
+    width: 85%;
+    font-family: 'Gaegu', sans-serif;
+}
+
+.content{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   bottom: 100px;
+}
+.content h3{
+    font-size: 18px;
+    font-weight: 600;
+    line-height:1.5;
+    width: 85%;
+    font-family: 'Gaegu', sans-serif;
+}
+.content p{
+    color: #495057;
+    width: 85%;
+    height: 5px;
+    font-size: 11px;
+    margin: 0 0 50px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.contentHeader{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-top: 1px solid #f1f3f5;
+
+}
+.postBy{
+    margin-left: 30px;
+}
+.contentHeader span, .contentHeader b{
+    margin-left: 5px;
+    font-size: 12px;
+}
+.contentHeader span{
+    color: #868e96;
+}
+.profileCircle{
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+}
+.profileCircle img{
+    margin-left: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 12.5px;
+}
+.likes{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 100px;
+    right: 15px;
+}
+.likes img{
+    object-fit: contain;
+}
+.likesCount{
+    position: absolute;
+    right: 40px
+}
