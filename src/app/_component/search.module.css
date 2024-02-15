@@ -65,4 +65,53 @@
     height: 30px;
     border-bottom: 1px solid #b3b3b3;
     color: #e9e5e5;
+    cursor: pointer;
+}
+
+.searchItem{
+    position: absolute;
+    width: 15vw;
+    height: 20vh;
+    border-radius: 20px;
+    color: white;
+    background-color: rgba(105, 104, 104, 0.4);
+    border: 1px solid #b3b3b3;
+    display: none;
+}
+.searchItem h3{
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    font-family: 'Gaegu', sans-serif;
+}
+.bestTags{
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    
+
+}
+.bestTags span{
+    width:auto;
+    min-width: 40px;
+    font-size: 8px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 15px;
+    align-items: center;
+    border-radius: 10px;
+    border: #b3b3b3 1px solid;
+    color: #b3b3b3;
+}
+.postBy{
+    position: absolute;
+    bottom: 10px;
+    margin-left: 5px;
+}
+.postBy span{
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.postBy b{
+    font-size: 13px;
 }

@@ -2,7 +2,7 @@
 import { useState } from "react"
 import styles from "./myprofile.module.css"
 import MyProfile from "./myprofile/myprofile"
-export default function myProfile(){
+export default function MyComponentProfile(){
     const [datePostMenu, setDatePostMenu]=useState("프로필")
     const handlePostTab= (tab:any)=>{
         setDatePostMenu(tab)

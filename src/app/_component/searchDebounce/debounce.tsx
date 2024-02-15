@@ -10,7 +10,7 @@ export default function Debounce(value:string, delay:number){
         return()=>{
             clearTimeout(timer)
         }
-    },[value])
+    },[value, delay])
 
     return autoComplete
 

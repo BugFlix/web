@@ -22,15 +22,22 @@ api.interceptors.request.use(
 );
 
 //가로채기
+let isRefreshing = false;
+
 api.interceptors.response.use(
-  (response) => {
+  async (response) => {
     return response;
   },
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      !isRefreshing
+    ) {
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
         const response = await api.post("/api/v1/auths/reissue", null, {
@@ -48,7 +55,7 @@ api.interceptors.response.use(
 
         // Retry the original request with the new access token
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return axios(originalRequest);
+        return api(originalRequest);
       } catch (refreshError) {
         // Log the error when refreshing the token
         console.error("Error refreshing token:", refreshError);
@@ -57,9 +64,11 @@ api.interceptors.response.use(
         console.log("Refresh token expired. Redirect to login page.");
 
         // Clear tokens and redirect to login page
-        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("accestoken");
         localStorage.removeItem("refreshtoken");
         window.location.href = "/login"; // Redirect to your login page
+      } finally {
+        isRefreshing = false;
       }
     }
 

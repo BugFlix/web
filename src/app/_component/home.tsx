@@ -33,22 +33,6 @@ export default  function Home(){
     const router=useRouter()
     //스크롤 감지 
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (
-    //             slideRef.current &&
-    //             slideRef.current.scrollTop + slideRef.current.clientHeight >= slideRef.current.scrollHeight-20
-    //         ) {
-    //             console.log("hello")
-    //         }
-    //     };
-    
-    //    slideRef.current?.addEventListener("scroll", handleScroll);
-    
-    //     return () => {
-    //         slideRef.current?.removeEventListener("scroll", handleScroll);
-    //     };
-    // }, [slideRef]);
     async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
         try {
             const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${pageParam}&limit=12`)

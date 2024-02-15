@@ -1,63 +1,144 @@
 .commentContainer {
-    box-sizing: border-box;
-    width: 90%;
-    height: 50px;
-  }
-  .commentContainer input{
-    background: transparent;
-    border: none;
-    outline: none;
-  }
-  
-  .commentContent {
+  width: 100%;
+  height: inherit;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: scroll;
+}
 
-    border: 1px solid #aab3ff;
-    box-shadow: 0px 0px 10px 3px rgba(170, 179, 255, 0.3);
-    border-radius: 16px;
-    padding: 10px;
-    flex: 1;
+.commentContent {
+  margin-top: 20px;
+}
+
+.commentInput {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.commentInput input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.commentInput button {
+  padding: 8px;
+  color: #9db4c2;
+  background: none;
+  border: 1px solid #9db4c2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.commentProfile{
+  display: flex;
+  align-items: center;
+
+}
+
+.commentText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Profile Image Styles */
+.profileImage {
+  border-radius: 50%;
+  width: 30px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
+  margin-right: 8px;
+}
+.replyInput{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.replyInput input {
+  width: calc(45vw);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 20px;
+  margin-bottom: 8px;
+}
+
+.replyInput button {
+  margin-top: -7px;
+  padding: 5px;
+  color: #9db4c2;
+  background: none;
+  border: 1px solid #9db4c2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reply {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.replyProfile{
+  display: flex;
+  align-items: center;
+}
+
+.replyText {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.reply button {
+  margin-right: 8px;
+  padding: 8px;
+  background: none;
+  color: #9db4c2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+  .reply button:last-child {
+    margin-right: 0;
   }
-  
-  .comment {
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #aab3ff;
-    border-radius: 16px;
-  }
-  
-  .reply {
-    padding: 5px;
-    margin-top: 5px;
-  }
-  
-  .commentInput,
-  .replyInput {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    background: transparent;
-  }
-  
-  .commentInput input,
-  .replyInput input {
-    flex: 1;
-    padding: 5px;
-    margin-right: 10px;
-  }
-  
-  .commentInput button,
-  .replyInput button {
-    background-color: #aab3ff;
-    color: white;
-    font-size: 10px;
-    width: 50px;
-    border: none;
-    cursor: pointer;
-  }
-  .replyBtn{
-    width: 50px;
-    font-size: 10px;
-    margin-left: 10px;
-  }
-  
-  
+
+.replyBtn {
+  padding: 8px;
+  background: none;
+  color: #9db4c2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.editBtn {
+  padding: 8px;
+  background: none;
+  color: #9db4c2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.deleteBtn {
+  padding: 8px;
+  background: none;
+  color: #9db4c2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

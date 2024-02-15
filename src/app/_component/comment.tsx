@@ -1,14 +1,27 @@
+import axios from "axios";
 import styles from "./comment.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import profileImg from "../../asset/images/kwang.jpg"
 
 interface Comment {
+  profile: string;
+  name: string;
+  parentId: number ;
   text: string;
   replies: Reply[];
 }
 
 interface Reply {
+  profile: string;
+  name: string;
+  parentId: number;
   text: string;
 }
+
+const user = {
+  profile: "https://velog.velcdn.com/images/tkrhdrhkdduf/profile/3d009855-9fa9-4d75-b0d5-397af8fea3b1/social_profile.jpeg",
+  name: "광열",
+};
 
 export default function Comment() {
   const [commentText, setCommentText] = useState<string>("");
@@ -19,21 +32,87 @@ export default function Comment() {
   const [editCommentIndex, setEditCommentIndex] = useState<number | null>(null);
   const [editReplyIndex, setEditReplyIndex] = useState<number | null>(null);
 
-  const handleCommentSubmit = () => {
-    if (commentText.trim() !== "") {
-      setComments([...comments, { text: commentText, replies: [] }]);
-      setCommentText("");
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/v1/comments");
+      console.log(response.data);
+      setComments(response.data);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
     }
   };
 
-  const handleReplySubmit = (commentIndex: number) => {
+  const handleCommentSubmit = async () => {
+    if (commentText.trim() !== "") {
+      try {
+        const response = await axios.post("http://localhost:8000/api/v1/comments", {
+          content: commentText,
+          parentId: null,
+          postId: 22,
+        });
+
+        if (response.status === 201) {
+          const newComment = {
+            id: response.data.id,
+            profile: user.profile,
+            name: user.name,
+            parentId: response.data.parentId,
+            text: commentText,
+            replies: [],
+          };
+
+          setComments([...comments, newComment]);
+          setCommentText("");
+        } else {
+          console.error("Failed to submit comment");
+        }
+      } catch (error) {
+        console.error("Error submitting comment:", error);
+      }
+    }
+  };
+
+  const handleReplySubmit = async (commentId: number) => {
     if (replyText.trim() !== "") {
-      const updatedComments = [...comments];
-      updatedComments[commentIndex].replies.push({ text: replyText });
-      setComments(updatedComments);
-      setReplyText("");
-      setShowReplyInput(false);
-      setReplyIndex(null);
+      try {
+        const response = await axios.post("http://localhost:8000/api/v1/comments", {
+          content: replyText,
+          parentId: commentId,
+          postId: 22,
+        });
+
+        if (response.status === 201) {
+          const newReply = {
+            profile:"https://velog.velcdn.com/images/tosspayments/profile/b8fbda89-6591-41ea-b280-582674fcff7a/image.jpg",
+            name: "토스페이먼츠",
+            parentId: response.data.parentId,
+            text: replyText,
+          };
+
+          const updatedComments = comments.map((comment) => {
+            if (comment.parentId === commentId) {
+              return {
+                ...comment,
+                replies: [...comment.replies, newReply],
+              };
+            }
+            return comment;
+          });
+
+          setComments(updatedComments);
+          setReplyText("");
+          setShowReplyInput(false);
+          setReplyIndex(null);
+        } else {
+          console.error("Failed to submit reply");
+        }
+      } catch (error) {
+        console.error("Error submitting reply:", error);
+      }
     }
   };
 
@@ -73,6 +152,9 @@ export default function Comment() {
     <div className={styles.commentContainer}>
       <div className={styles.commentContent}>
         <div className={styles.commentInput}>
+          <img src={user.profile} alt="Profile" className={styles.profileImage} />
+          <div className={styles.commenterName}>{user.name}</div>
+
           <input
             type="text"
             placeholder="댓글을 남겨주세요..."
@@ -84,6 +166,11 @@ export default function Comment() {
 
         {comments.map((comment, commentIndex) => (
           <div key={commentIndex} className={styles.comment}>
+            <div className={styles.commentProfile}>
+              <img src={comment.profile} alt="Profile" className={styles.profileImage} />
+              <div className={styles.commenterName}>{comment.name}</div>
+            </div>
+
             {editCommentIndex === commentIndex ? (
               <>
                 <input
@@ -97,7 +184,7 @@ export default function Comment() {
               </>
             ) : (
               <>
-                {comment.text}
+                <div className={styles.commentText}>{comment.text}</div>
 
                 {showReplyInput && replyIndex === commentIndex && (
                   <div className={styles.replyInput}>
@@ -107,13 +194,17 @@ export default function Comment() {
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                     />
-                    <button onClick={() => handleReplySubmit(commentIndex)}>
+                    <button onClick={() => handleReplySubmit(comment.parentId)}> 
                       답글달기
                     </button>
                   </div>
                 )}
                 {comment.replies.map((reply, replyIndex) => (
                   <div key={replyIndex} className={styles.reply}>
+                    <div className={styles.replyProfile}>
+                      <img src={reply.profile} alt="Profile" className={styles.profileImage} />
+                      <div className={styles.commenterName}>{reply.name}</div>
+                    </div>
                     {editReplyIndex === replyIndex ? (
                       <>
                         <input
@@ -131,16 +222,18 @@ export default function Comment() {
                       </>
                     ) : (
                       <>
-                        {reply.text}
+                        <div className={styles.replyText}>{reply.text}</div>
                         <button
                           onClick={() => {
                             setEditReplyIndex(replyIndex);
                             setReplyText(reply.text);
                           }}
+                           className={styles.editBtn}
                         >
                           수정
                         </button>
                         <button
+                        className={styles.deleteBtn}
                           onClick={() =>
                             handleDeleteReply(commentIndex, replyIndex)
                           }
@@ -162,10 +255,10 @@ export default function Comment() {
                 >
                   답글달기
                 </button>
-                <button onClick={() => setEditCommentIndex(commentIndex)}>
+                <button className={styles.editBtn} onClick={() => setEditCommentIndex(commentIndex)}>
                   수정
                 </button>
-                <button onClick={() => handleDeleteComment(commentIndex)}>
+                <button className={styles.deleteBtn}onClick={() => handleDeleteComment(commentIndex)}>
                   삭제
                 </button>
               </>
