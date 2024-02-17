@@ -1,0 +1,29 @@
+.container{
+    width: inherit;
+    height: inherit;
+    background: #F6F6F6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.headerMenu{
+    position: absolute;
+    top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: 58px;
+    flex-shrink: 0;
+}
+.headerMenu div{
+    padding: 10px 25px;
+    text-decoration: none;
+    color: #7e7e80;
+}
+.background{
+    margin-top:100px;
+    background: white;
+    width: 70vw;
+    height: 80vh;
+}
