@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Noto+Sans+KR&display=swap');
+.moduleBackground{
+    width: inherit;
+    height: inherit;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+
+}

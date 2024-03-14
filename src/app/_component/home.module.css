@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Noto+Sans+KR&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+.moduleBackground{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+
+}
+.homeContainer{
+    width: 1300px;
+    height: inherit;
+    display: flex;
+    gap: 30px;
+    @media only screen and (max-width: 1200px) {
+        gap: 20px;
+    }
+    @media only screen and (max-width: 1100px) {
+        gap: 0px;
+    }
+    @media only screen and (max-width: 440px) {
+      flex-direction: column;
+      align-items: center;
+      overflow-y: scroll;
+     }
+}
