@@ -6,8 +6,7 @@ import styles from "@/app/_component/dashboard.module.css"
 export default function PostView(){
     return(
      <div className={styles.container}>
-      <Home/>
-      <Post/>
+    
      </div>
     )
 }

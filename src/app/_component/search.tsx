@@ -31,33 +31,33 @@ export default function Search(){
             } else if (selectedType === "tag") {
               type = "TAG";
             }
-            // try{
-           
-            //     const response = await api.get(`/api/v1/search/posts?query=${autoCompleteSearch}&type=${type}&offset=0&limit=12`,{
-            //       headers:{
-            //         "Content-Type": "application/json",
-            //         Authorization: `Bearer ${accessToken}`
-            //       }
-            //     });
-            //     const autoCompleteResults = response.data
-    
-            //     console.log("AutoComplete Results:", autoCompleteResults);
-            //     return autoCompleteResults;
-            // }
-            // catch(error){
-    
-            // }
             try{
            
-              const response = await axios.get(`http://localhost:8000/api/v1/search/posts?query=${autoCompleteSearch}&type=${type}&offset=0&limit=12`);
-              const autoCompleteResults = response.data
+                const response = await api.get(`/api/v1/search/posts?query=${autoCompleteSearch}&type=${type}&offset=0&limit=12`,{
+                  headers:{
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`
+                  }
+                });
+                const autoCompleteResults = response.data
+    
+                console.log("AutoComplete Results:", autoCompleteResults);
+                return autoCompleteResults;
+            }
+            catch(error){
+    
+            }
+          //   try{
+           
+          //     const response = await axios.get(`http://localhost:8000/api/v1/search/posts?query=${autoCompleteSearch}&type=${type}&offset=0&limit=12`);
+          //     const autoCompleteResults = response.data
   
-              console.log("AutoComplete Results:", autoCompleteResults);
-              return autoCompleteResults;
-          }
-          catch(error){
+          //     console.log("AutoComplete Results:", autoCompleteResults);
+          //     return autoCompleteResults;
+          // }
+          // catch(error){
   
-          }
+          // }
         }
        
        

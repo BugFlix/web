@@ -23,7 +23,7 @@ type Post ={
     createdDate: string;
     modifiedDate: string;
 }
-export default function leftSection(){
+export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
     const [datePostMenu, setDatePostMenu]=useState("주간")
     const [isSearchbar,setIsSearchbar]=useState(false)
@@ -34,25 +34,25 @@ export default function leftSection(){
 
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
-            // try {
-            //     const response = await api.get(`/api/v1/posts/ranks?type=WEEKLY&offset=${pageParam}&limit=1`,{
-            //         headers:{
-            //             "Content-Type":"application/json",
-
-            //         }
-            //     })
-            //     console.log(response.data)
-            //     return response.data
-            // } catch (error) {
-            //     console.error(error)
-            // }
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${pageParam}&limit=12`)
+                const response = await api.get(`/api/v1/posts/ranks?type=WEEKLY&offset=${pageParam}&limit=1`,{
+                    headers:{
+                        "Content-Type":"application/json",
+
+                    }
+                })
                 console.log(response.data)
-                return response.data.slicedData
+                return response.data
             } catch (error) {
                 console.error(error)
             }
+            // try {
+            //     const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${pageParam}&limit=12`)
+            //     console.log(response.data)
+            //     return response.data.slicedData
+            // } catch (error) {
+            //     console.error(error)
+            // }
         }
         //리액트쿼리를 이용한 데이터 헨들 무한스크롤
         const {data:bestPost, isLoading, isError, isSuccess, fetchNextPage, hasNextPage, isFetching  }=useInfiniteQuery<Post[],object,InfiniteData<Post[]>,[_1: string],number>({

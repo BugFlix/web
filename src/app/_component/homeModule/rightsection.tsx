@@ -5,7 +5,7 @@ import alarmImg from "@/asset/images/main/notification.png"
 import messageImg from "@/asset/images/main/message.png"
 import { AuthContext } from "@/app/_component/Provider/authProvider"
 import { useContext, useEffect, useRef, useState } from "react"
-export default function rightSection(){
+export default function RightSection(){
     const {isLogin,nickname}=useContext(AuthContext)
     return(
         <div className={styles.rightSection}>

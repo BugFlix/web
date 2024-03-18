@@ -56,7 +56,7 @@ interface Post {
       return formatDate(dateString);
     }
   };
-export default function myLeftSection (){
+export default function MyLeftSection (){
 
     const {nickname } = useContext(AuthContext);
     const dispatch = useDispatch()

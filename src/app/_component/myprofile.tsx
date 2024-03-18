@@ -22,7 +22,7 @@ export default function MyComponentProfile(){
     const accessToken=localStorage.getItem("accestoken")
     async function onHandleProfile(){
         try{
-            const response= await axios.get("api/v1/profiles/mine",{
+            const response= await api.get("api/v1/profiles/mine",{
                 headers:{
                     "Content-Type":"application/json",
                     Authorization: `Bearer ${accessToken}`,
