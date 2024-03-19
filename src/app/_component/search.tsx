@@ -1,10 +1,14 @@
 "use client"
-import { useState, useEffect} from "react"
+import { useContext,useState, useEffect} from "react"
 import styles from "./search.module.css"
 import Debounce from "./searchDebounce/debounce"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import api from "../config/apiConfig"
+import { useDispatch } from "react-redux"
+import { setPostId } from "@/app/slices/postSlice"
+import { useRouter } from "next/navigation"
+import { AuthContext } from "@/app/_component/Provider/authProvider"
 type Value={
     postId:number
     title:string
@@ -13,6 +17,9 @@ type Value={
 }
 export default function Search(){
     const [search, setSearch]=useState("")
+    const {isLogin,nickname}=useContext(AuthContext)
+    const router=useRouter()
+    const dispatch = useDispatch()
     const accessToken=localStorage.getItem("accestoken")
     const handleInputChange=(e:any)=>{
         setSearch(e.target.value)
@@ -109,7 +116,18 @@ export default function Search(){
         }
       };
       
-
+      const onHandlePost =(postid:number)=>{
+        console.log(postid)
+        if(isLogin){
+            router.push(`/${nickname}/dashboard/home/post`)
+            dispatch(setPostId(postid))
+        }
+        else{
+            router.push(`/dashboard/home/post`)
+            dispatch(setPostId(postid))
+        }
+        
+    }
 
     return(
         <div className={styles.modalBackground}>
@@ -131,6 +149,7 @@ export default function Search(){
                 className={styles.autoCompleteItem}
                 onMouseOver={()=>onHandleSearchItemView(value)}
                 onMouseOut={onHandleSearchItemOut}
+                onClick={()=>onHandlePost(value.postId)}
               >
                 {value.title}
              

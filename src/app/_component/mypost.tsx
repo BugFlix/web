@@ -36,31 +36,31 @@ export default function MyPost(){
 
   const accessToken=localStorage.getItem("accestoken")
   async function onHandleMyPostPreview() {
-    try {
-      const response = await api.get(`/api/v1/posts/mine?url=${encodeUrl}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      console.log(response.data)
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+    // try {
+    //   const response = await api.get(`/api/v1/posts/mine?url=${encodeUrl}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${accessToken}`,
+    //     },
+    //   });
+    //   console.log(response.data)
+    //   return response.data;
+    // } catch (error) {
+    //   console.error(error);
+    //   throw error;
+    // }
 
-//     try{
-//       const response =await axios.get("/api/v1/posts/mine", {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${accessToken}`
-//       }
-//     });
-//     console.log(response.data)
-//     return response.data;
-//     }catch(error){
-//       console.log(error)
-// }
+    try{
+      const response =await api.get("/api/v1/posts/mine", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    console.log(response.data)
+    return response.data;
+    }catch(error){
+      console.log(error)
+}
   }
   
   const { data: datapost, isLoading, isError, isSuccess } = useQuery<Post[]>({

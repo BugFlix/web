@@ -3,6 +3,8 @@ import styles from "./comment.module.css";
 import { useState, useEffect } from "react";
 import profileImg from "../../asset/images/kwang.jpg"
 import api from "../config/apiConfig";
+import { useSelector } from "react-redux"
+import { RootState } from '../reducers/rootReducer';
 
 interface Comment {
   commentId:number
@@ -27,6 +29,7 @@ const user = {
 };
 
 export default function Comment() {
+  const postId = useSelector((state: RootState) => state.post.postId);
   const [commentText, setCommentText] = useState<string>("");
   const [comments, setComments] = useState<Comment[]>([]);
   const [replyText, setReplyText] = useState<string>("");
@@ -42,7 +45,7 @@ export default function Comment() {
 
   const fetchComments = async () => {
     try {
-      const response = await api.get(`/api/v1/comments/${1}`,{
+      const response = await api.get(`/api/v1/comments/${postId}`,{
         headers:{
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`
@@ -90,7 +93,7 @@ export default function Comment() {
         const response = await api.post("/api/v1/comments", {
           content: commentText,
           parentCommentId: null,
-          postId: 1,
+          postId: postId,
         },{
           headers:{
             "Content-Type": "application/json",
@@ -112,7 +115,7 @@ export default function Comment() {
         const response = await api.post("/api/v1/comments", {
           content: replyText,
           parentCommentId:commentId,
-          postId: 1,
+          postId: postId,
         },{
           headers:{
             "Content-Type": "application/json",

@@ -9,6 +9,8 @@ import { AuthContext } from "@/app/_component/Provider/authProvider"
 import { useContext, useEffect, useRef, useState } from "react"
 import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useInView } from "react-intersection-observer"
+import { useDispatch } from "react-redux"
+import { setPostId } from "@/app/slices/postSlice"
 import axios from "axios"
 import api from "@/app/config/apiConfig"
 import Search from "../search"
@@ -27,6 +29,7 @@ export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
     const [datePostMenu, setDatePostMenu]=useState("주간")
     const [isSearchbar,setIsSearchbar]=useState(false)
+    const dispatch = useDispatch()
     const HandleSearch=()=>{
         setIsSearchbar(true)
     }
@@ -81,9 +84,11 @@ export default function LeftSection(){
             console.log(postid)
             if(isLogin){
                 router.push(`/${nickname}/dashboard/home/post`)
+                dispatch(setPostId(postid))
             }
             else{
                 router.push(`/dashboard/home/post`)
+                dispatch(setPostId(postid))
             }
             
         }

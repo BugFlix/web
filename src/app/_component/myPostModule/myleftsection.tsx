@@ -81,7 +81,7 @@ export default function MyLeftSection (){
       // }
   
       try{
-        const response =await axios.get("/api/v1/posts/mine", {
+        const response =await api.get("/api/v1/posts/mine", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`
@@ -99,7 +99,7 @@ export default function MyLeftSection (){
         queryKey:["dataPostPreview"],
         queryFn: onHandleMyPostPreview,
         initialPageParam:0,
-        getNextPageParam: (lastpage)=>lastpage.at(-1)?.postId,
+        getNextPageParam: (lastpage)=>lastpage.at(1)?.postId,
     })
     //스클롤 감지 하단으로 가면 다음 요청 보내기
     const {ref,inView}=useInView({

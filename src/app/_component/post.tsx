@@ -83,7 +83,7 @@ export default function Post(){
       //   // }
       // })
       try{
-        const response =await api.get<Post>(`/api/v1/posts/${1}`, {
+        const response =await api.get<Post>(`/api/v1/posts/${postId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`
