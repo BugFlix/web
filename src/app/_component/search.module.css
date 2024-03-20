@@ -124,3 +124,10 @@
 .postBy b{
     font-size: 13px;
 }
+.exit{
+    position: absolute;
+    left:30px;
+    top: 100px;
+    color: #e9e5e5;
+    cursor: pointer;
+}

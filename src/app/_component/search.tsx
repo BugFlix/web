@@ -1,5 +1,5 @@
 "use client"
-import { useContext,useState, useEffect} from "react"
+import { useContext,useState, useEffect, useRef} from "react"
 import styles from "./search.module.css"
 import Debounce from "./searchDebounce/debounce"
 import { useQuery } from "@tanstack/react-query"
@@ -20,6 +20,7 @@ export default function Search({setIsSearchbar}: { setIsSearchbar: React.Dispatc
     const {isLogin,nickname}=useContext(AuthContext)
     const router=useRouter()
     const dispatch = useDispatch()
+    const searchRef = useRef<HTMLDivElement>(null);
     const accessToken=localStorage.getItem("accestoken")
     const handleInputChange=(e:any)=>{
         setSearch(e.target.value)
@@ -130,10 +131,40 @@ export default function Search({setIsSearchbar}: { setIsSearchbar: React.Dispatc
         }
         
     }
+    const setExitBtn =()=>{
+      setIsSearchbar(false)
+    }
+    useEffect(() => {
+      const handleKeyDown = (event: KeyboardEvent) => {
+          if (event.key === "Escape") {
+              setIsSearchbar(false);
+          }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+          document.removeEventListener("keydown", handleKeyDown);
+      };
+  }, [setIsSearchbar]);
+    
+  const handleClickOutside = (event: MouseEvent) => {
+    if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchbar(false);
+    }
+};
+
+useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+    };
+}, [setIsSearchbar]);
 
     return(
         <div className={styles.modalBackground}>
-            <div className={styles.searchContainer}>
+            <div  className={styles.exit}  onClick={setExitBtn}>닫기</div>
+            <div ref={searchRef} className={styles.searchContainer}>
                 <div className={styles.searchBar}>
                     <select className={styles.select} id="searchTypeSelect">
                         <option value="default">제목+테그</option>
