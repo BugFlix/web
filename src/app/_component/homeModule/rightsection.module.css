@@ -79,6 +79,7 @@ margin-left: 0;
     border: none;
     width: 15px;
     height: 15px;
+    cursor: pointer;
 }
 .profileMenu :nth-child(2){
     background: url(../../../asset/images/main/arrow.png);
@@ -88,6 +89,7 @@ margin-left: 0;
     border: none;
     width: 15px;
     height: 15px;
+    cursor: pointer;
 }
 .notificationBox{
     display: flex;

@@ -5,8 +5,19 @@ import alarmImg from "@/asset/images/main/notification.png"
 import messageImg from "@/asset/images/main/message.png"
 import { AuthContext } from "@/app/_component/Provider/authProvider"
 import { useContext, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+
 export default function RightSection(){
     const {isLogin,nickname}=useContext(AuthContext)
+    const router=useRouter()
+    const handleMyProfile=()=>{
+        router.push(`/${nickname}/dashboard/myprofile`)
+    }
+    const handleHome=()=>{
+        router.push("/")
+        localStorage.removeItem("accestoken");
+        localStorage.sremoveItem("refreshtoken");
+    }
     return(
         <div className={styles.rightSection}>
             <div className={styles.box}>
@@ -15,8 +26,8 @@ export default function RightSection(){
                 </div>
                 <span>{nickname}</span>
                 <div className={styles.profileMenu}>
-                    <button></button>
-                    <button></button>
+                    <button onClick={handleMyProfile}></button>
+                    <button onClick={handleHome}></button>
                 </div>
             </div>
             <div className={styles.notificationBox}>

@@ -1,5 +1,6 @@
 "use client";
 
+import axios from 'axios';
 import style from './signup.module.css';
 import {useRouter} from "next/navigation";
 import {ChangeEventHandler, FormEventHandler, useState} from "react";
@@ -28,24 +29,21 @@ export default function SignupModal() {
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log([email,password,nickname,phoneNumber,birthDate])
-    fetch('http://localhost:9090/api/users', {
-      method: 'post',
-      body: JSON.stringify({
-        email:email,
-        password:password,
-        phoneNumber:phoneNumber,
-        nickname:nickname,
-        birthDate:birthDate
-      }),
-      credentials: 'include',
-    }).then((response: Response) => {
+    axios.post('https://www.scrabler.com/api/v1/users', {
+      email: email,
+      password: password,
+      nickname: nickname,
+      phoneNumber: phoneNumber,
+      birthDate: birthDate
+    })
+    .then((response) => {
       console.log(response.status);
       if (response.status === 200) {
-        router.replace('/home');
+        router.replace('/');
       }
-    }).catch((err) => {
-      console.error(err);
+    })
+    .catch((error) => {
+      console.error(error);
     });
   }
 
