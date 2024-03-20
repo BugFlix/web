@@ -154,7 +154,7 @@ export default function LeftSection(){
                    
                 </div>
           
-               {isSearchbar&&<Search/>}
+               {isSearchbar&&<Search setIsSearchbar={setIsSearchbar}/>}
             </div>
             
          </div>

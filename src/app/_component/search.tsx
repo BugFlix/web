@@ -15,7 +15,7 @@ type Value={
     tags:string
     nickname:string
 }
-export default function Search(){
+export default function Search({setIsSearchbar}: { setIsSearchbar: React.Dispatch<React.SetStateAction<boolean>> }){
     const [search, setSearch]=useState("")
     const {isLogin,nickname}=useContext(AuthContext)
     const router=useRouter()
@@ -121,10 +121,12 @@ export default function Search(){
         if(isLogin){
             router.push(`/${nickname}/dashboard/home/post`)
             dispatch(setPostId(postid))
+            setIsSearchbar(false)
         }
         else{
             router.push(`/dashboard/home/post`)
             dispatch(setPostId(postid))
+            setIsSearchbar(false)
         }
         
     }
