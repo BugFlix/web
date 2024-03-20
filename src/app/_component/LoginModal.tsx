@@ -51,6 +51,8 @@ export default function LoginModal(){
       if (data.accessToken && data.refreshToken) {
         localStorage.setItem("accestoken", data.accessToken);
         localStorage.setItem("refreshtoken", data.refreshToken);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
         setIsLogin(true);
         setNickname(data.nickname)
         router.push(`/${data.nickname}/dashboard/home`)

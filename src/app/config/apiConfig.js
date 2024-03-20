@@ -77,8 +77,8 @@ const api = axios.create({
 });
 console.log("refresh", localStorage.getItem("refreshtoken"));
 const requestData = {
-  email: "sgky0511@naver.com",
-  password: "ky4400",
+  email: localStorage.getItem("email"),
+  password: localStorage.getItem("password"),
 };
 //리프레시토큰 요청 api
 function postRefreshToken() {

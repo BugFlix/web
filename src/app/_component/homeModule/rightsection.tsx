@@ -16,7 +16,7 @@ export default function RightSection(){
     const handleHome=()=>{
         router.push("/")
         localStorage.removeItem("accestoken");
-        localStorage.sremoveItem("refreshtoken");
+        localStorage.removeItem("refreshtoken");
     }
     return(
         <div className={styles.rightSection}>
