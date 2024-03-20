@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Logo from "@/asset/images/logo.png"
 export default function Main() {
 
+
   return (
     <>
       <div className={styles.left}>

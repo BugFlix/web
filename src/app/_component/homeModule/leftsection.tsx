@@ -27,18 +27,17 @@ type Post ={
 }
 export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
-    const [datePostMenu, setDatePostMenu]=useState("주간")
+    const [datePostMenu, setDatePostMenu]=useState("WEEKLY")
     const [isSearchbar,setIsSearchbar]=useState(false)
     const dispatch = useDispatch()
     const HandleSearch=()=>{
         setIsSearchbar(true)
     }
     const router=useRouter()
-
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
             try {
-                const response = await api.get(`/api/v1/posts/ranks?type=WEEKLY&offset=${pageParam}&limit=1`,{
+                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=3`,{
                     headers:{
                         "Content-Type":"application/json",
 
@@ -58,7 +57,7 @@ export default function LeftSection(){
             // }
         }
         //리액트쿼리를 이용한 데이터 헨들 무한스크롤
-        const {data:bestPost, isLoading, isError, isSuccess, fetchNextPage, hasNextPage, isFetching  }=useInfiniteQuery<Post[],object,InfiniteData<Post[]>,[_1: string],number>({
+        const {data:bestPost, isLoading, isError, isSuccess,refetch, fetchNextPage, hasNextPage, isFetching  }=useInfiniteQuery<Post[],object,InfiniteData<Post[]>,[_1: string],number>({
             queryKey:["bestPostPreview"],
             queryFn: onHandleBestPostPreview,
             initialPageParam:0,
@@ -94,6 +93,7 @@ export default function LeftSection(){
         }
         const handlePostTab= (tab:any)=>{
             setDatePostMenu(tab)
+            refetch();  
         }
     return(
         <div className={styles.leftSection}>
@@ -115,9 +115,9 @@ export default function LeftSection(){
                     </div>
                 </div>
                 <div className={styles.popularTab}>
-                        <span>주간</span>
-                        <span>월간</span>
-                        <span>연간</span>
+                        <span onClick={()=>handlePostTab("WEEKLY")}>주간</span>
+                        <span onClick={()=>handlePostTab("MONTHLY")}>월간</span>
+                        <span onClick={()=>handlePostTab("YEARLY")}>연간</span>
                 </div>
             </div>
             {/* 포스트 컨테이너 */}

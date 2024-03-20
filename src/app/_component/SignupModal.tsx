@@ -39,7 +39,8 @@ export default function SignupModal() {
     .then((response) => {
       console.log(response.status);
       if (response.status === 200) {
-        router.replace('/');
+        router.back();
+       
       }
     })
     .catch((error) => {

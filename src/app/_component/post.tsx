@@ -106,9 +106,9 @@ export default function Post(){
         <div className={styles.postContainer}>로딩중입니다...</div>
       }
       if (isSuccess && dataPostDetail) {
-        setLikeCount(dataPostDetail.like_count ?? 0);
-        setBtnPressed(dataPostDetail.is_like ?? false);
-        setImg(dataPostDetail.is_like ? likeImg : unlikeImg);
+        setLikeCount(dataPostDetail.likeCount ?? 0);
+        setBtnPressed(dataPostDetail.like ?? false);
+        setImg(dataPostDetail.like ? likeImg : unlikeImg);
       }
       
     }, [isSuccess, dataPostDetail, isLoading]);
@@ -116,9 +116,9 @@ export default function Post(){
     const postRef=useRef<HTMLDivElement>(null)
     const scrabRef=useRef<HTMLDivElement>(null)
     const memoRef=useRef<HTMLDivElement>(null)
+    const footerRef=useRef<HTMLDivElement>(null)
    
-   
-    const onHandleLikeButton = async () => {
+    const onHandleLikeButton = async (postId:number) => {
       setLikeCount((prev) => {
         if (!btnPressed) {
           setImg(likeImg);
@@ -131,7 +131,14 @@ export default function Post(){
         }
       });
       try {
-        // 비동기 작업 수행 (필요한 경우)
+        const response=await api.patch(`/api/v1/likes/${postId}`,{},{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+      )
+        console.log(response)
       } catch (error) {
         console.log(error);
       }
@@ -151,11 +158,12 @@ export default function Post(){
         
     }
     const onHandleFullSize = ()=>{
-      if(postRef.current&&scrabRef.current&&memoRef.current){
+      if(postRef.current&&scrabRef.current&&memoRef.current&&footerRef.current){
         postRef.current.style.width = isFullSize ? "900px" : "100%";
         postRef.current.style.transition = "0.4s";
         scrabRef.current.style.height = isFullSize ? "500px" : "1000px";
         memoRef.current.style.marginTop = isFullSize ? "702px" : "1177.5px";
+        footerRef.current.style.top=isFullSize? "1220px":"1700px"
           setIsFullSize(!isFullSize);
       }
 
@@ -203,7 +211,7 @@ export default function Post(){
                             </div>
                         ))}     
                     </div>
-                    <button className={styles.likeBtn} onClick={onHandleLikeButton}>
+                    <button className={styles.likeBtn} onClick={()=>onHandleLikeButton(dataPostDetail?.postId)}>
                     <Image src={img} alt="img"></Image>
                     </button>
                     <span className={styles.likeValue}>{likeCount}</span>
@@ -226,7 +234,7 @@ export default function Post(){
                   </div>
                   </div>
 
-                <div className={styles.footer}>
+                <div ref={footerRef}className={styles.footer}>
                   <Comment />
                 </div>
         </div>
