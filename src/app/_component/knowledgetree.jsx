@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useRef, useCallback } from "react";
 import ReactFlow, {
   addEdge,
@@ -21,11 +21,13 @@ import likesIcon from "@/asset/images/likestar.png";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import api from "../config/apiConfig";
+import CustomNode from "./customNodes/customNodes";
 
-const initialNodes = [
-
-];
+const initialNodes = [];
 const initialEdges = [];
+const customNodeTypes = {
+  custom: CustomNode, // Custom Node 컴포넌트 추가
+};
 
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
@@ -33,30 +35,25 @@ export default function Home() {
   const wrapperRef = useRef(null);
   async function onHandleBestPostPreview({ pageParam }) {
     try {
-        const response = await api.get(`/api/v1/posts/ranks?type=WEEKLY&offset=0&limit=12`,{
-            headers:{
-                "Content-Type":"application/json",
-
-            }
-        })
-        console.log(response.data)
-        return response.data
+      const response = await api.get(
+        `/api/v1/posts/ranks?type=WEEKLY&offset=0&limit=12`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-    // try {
-    //     const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${pageParam}&limit=12`)
-    //     console.log(response.data)
-    //     return response.data.slicedData
-    // } catch (error) {
-    //     console.error(error)
-    // }
-}
-//리액트쿼리를 이용한 데이터 헨들 무한스크롤
-const {data:bestPost}=useQuery({
-  queryKey:"bestPost",
-  queryFn:onHandleBestPostPreview
-})
+  }
+  //리액트쿼리를 이용한 데이터 헨들 무한스크롤
+  const { data: bestPost } = useQuery({
+    queryKey: "bestPost",
+    queryFn: onHandleBestPostPreview,
+  });
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -67,78 +64,78 @@ const {data:bestPost}=useQuery({
     [setEdges]
   );
 
-  const onConnect = useCallback(
-    (connection) => setEdges((eds) => addEdge(connection, eds)),
-    [setEdges]
-  );
+  const onConnect = (params) => {
+    console.log("onConnect params:", params); // 연결된 노드들의 정보를 콘솔에 출력
+    const { source, target } = params;
+    const newEdge = {
+      id: `edge-${source}-${target}`,
+      source,
+      target,
+    };
+    setEdges((prevEdges) => [...prevEdges, newEdge]);
+  };
 
-  const handleWrapperClick = (title,count,image,nickname) => {
-    const wrapperContent = (
-      <div className={styles.wrapper}>
-        <div className={styles.previewHeader}>
-          <div className={styles.profileCircle}>
-            <Image src={profileImg} alt="profileImg" />
-          </div>
-          <div className={styles.postBy}>
-            <span>post</span> <b>{nickname}</b>
-          </div>
-          <span className={styles.likesCount}>{count}</span>
-          <div className={styles.likes}>
-            <Image src={likesIcon} alt="like" />
-          </div>
-        </div>
-        <div className={styles.previewBox}>
-          <img src={image} alt="previewImg" />
-        </div>
-        <div className={styles.card}>
-          <h3>{title}</h3>
-          <div className={styles.tags}>
-            <span>알고리즘</span>
-          </div>
-        </div>
-      </div>
-    );
+  const handleWrapperClick = (postId, title, count, image, nickname) => {
     const id = (nodes.length + 1).toString();
     const newNode = {
       id,
-      data: { label: wrapperContent }, // wrapper 내용으로 노드 label 설정
-      position: { x: event.clientX - wrapperRef.current.offsetLeft - 100, y: event.clientY - wrapperRef.current.offsetTop - 100 },
+      type: "custom",
+      data: { postId, title, count, image, nickname }, // wrapper 내용으로 노드 label 설정
+      position: {
+        x: event.clientX - wrapperRef.current.offsetLeft - 100,
+        y: event.clientY - wrapperRef.current.offsetTop - 100,
+      },
     };
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
-  
+
   return (
     <div className={styles.background}>
       <div className={styles.searchContainer}>
-      <div className={styles.wrapperContainer}>
-                {bestPost && bestPost.map((value, index)=>(
-                    <div key={index}className={styles.wrapper} ref={wrapperRef} onClick={ ()=>handleWrapperClick(value.title,value.likeCount,value.imageUrl,value.nickname)}>
-                               <div className={styles.previewHeader}>
-                                    <div className={styles.profileCircle}>
-                                        <Image src={profileImg} alt="profileImg"></Image>
-                                    </div>
-                                    <div className={styles.postBy}> <span>post</span> <b>{value.nickname}</b></div> 
-                                    <span className={styles.likesCount}>{value.likeCount}</span>
-                                    <div className={styles.likes}><Image src={likesIcon} alt="like"></Image></div>
-                            </div>
-                            <div  className={styles.previewBox}>
-                                <img src={value.imageUrl} alt="previewImg"></img>
-                            </div>
-                            <div className={styles.card}>
-                                <h3>{value.title}</h3>
-                                <div className={styles.tags}>
-                                   {value.tags.map((value,index)=>(
-                                       <span key={index}>{value}</span>
-                                   ))}
-                                    
-                                 </div>
-                            </div>
-                            {/* <div ref={ref} style={{height:50}}></div> */}
-                    </div>
-                  
-                    ))}
-                   
+        <div className={styles.wrapperContainer}>
+          {bestPost &&
+            bestPost.map((value, index) => (
+              <div
+                key={index}
+                className={styles.wrapper}
+                ref={wrapperRef}
+                onClick={() =>
+                  handleWrapperClick(
+                    value.postId,
+                    value.title,
+                    value.likeCount,
+                    value.imageUrl,
+                    value.nickname
+                  )
+                }
+              >
+                <div className={styles.previewHeader}>
+                  <div className={styles.profileCircle}>
+                    <Image src={profileImg} alt="profileImg"></Image>
+                  </div>
+                  <div className={styles.postBy}>
+                    {" "}
+                    <span>post</span> <b>{value.nickname}</b>
+                  </div>
+                  <span className={styles.likesCount}>{value.likeCount}</span>
+                  <div className={styles.likes}>
+                    <Image src={likesIcon} alt="like"></Image>
+                  </div>
                 </div>
+                <div className={styles.previewBox}>
+                  <img src={value.imageUrl} alt="previewImg"></img>
+                </div>
+                <div className={styles.card}>
+                  <h3>{value.title}</h3>
+                  <div className={styles.tags}>
+                    {value.tags.map((value, index) => (
+                      <span key={index}>{value}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
       <ReactFlow
         nodes={nodes}
@@ -146,8 +143,9 @@ const {data:bestPost}=useQuery({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={customNodeTypes}
       >
-        <Background gap={8} />
+       <Background  />
         <Controls />
         <MiniMap />
       </ReactFlow>
