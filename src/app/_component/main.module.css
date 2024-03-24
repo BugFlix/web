@@ -16,8 +16,8 @@
 }
 .logo{
     position: absolute;
-    width: 50dvw;
-    height: 50dvw;
+    width: 30vw;
+    height: 30vw;
     @media only screen and (max-width: 800px) {
         width: 75vw;
         height: 75vw;
