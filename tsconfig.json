@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "dist/types/**/*.ts"
-  ],
+, "src/app/_component/knowledgetree.jsx"  ],
   "exclude": [
     "node_modules"
   ]
