@@ -23,10 +23,9 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../config/apiConfig";
 
 const initialNodes = [
-  { id: "1", data: { label: "Node 1" }, position: { x: 5, y: 5 } },
-  { id: "2", data: { label: "Node 2" }, position: { x: 5, y: 100 } },
+
 ];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [];
 
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
