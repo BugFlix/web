@@ -15,7 +15,10 @@ type Value={
     tags:string
     nickname:string
 }
-export default function Search({setIsSearchbar}: { setIsSearchbar: React.Dispatch<React.SetStateAction<boolean>> }){
+type SearchProps = {
+  setIsSearchbar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+export default function Search({ setIsSearchbar }: SearchProps){
     const [search, setSearch]=useState("")
     const {isLogin,nickname}=useContext(AuthContext)
     const router=useRouter()

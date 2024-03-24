@@ -39,7 +39,6 @@ export default function Dashboard({children}:props){
                   </main>
                   </div>
               </div>
-             {showSearch&& <Search/>}
               </div>
       )
   
