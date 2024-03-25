@@ -35,6 +35,7 @@ const CustomNode = ({ data }) => {
           <span>알고리즘</span>
         </div>
       </div>
+
       <Handle
         type="target"
         position="bottom"

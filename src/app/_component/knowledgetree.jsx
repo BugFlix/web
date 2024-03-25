@@ -22,16 +22,19 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import api from "../config/apiConfig";
 import CustomNode from "./customNodes/customNodes";
+import CustomTextNode from "./customNodes/customTextNodes"
 
 const initialNodes = [];
 const initialEdges = [];
 const customNodeTypes = {
   custom: CustomNode, // Custom Node 컴포넌트 추가
+  text: CustomTextNode,
 };
 
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  console.log(nodes)
   const wrapperRef = useRef(null);
   async function onHandleBestPostPreview({ pageParam }) {
     try {
@@ -89,8 +92,29 @@ export default function Home() {
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
 
+
+  const handleText = () => {
+    const id = (nodes.length + 1).toString();
+    const newNode = {
+      id,
+      type: "text",
+      data: {
+        text: "",
+        onChange: ""
+      },
+      position: {
+        x: event.clientX - wrapperRef.current.offsetLeft - 100,
+        y: event.clientY - wrapperRef.current.offsetTop - 100,
+      },
+    };
+    setNodes((prevNodes) => [...prevNodes, newNode]);
+  };
+
   return (
     <div className={styles.background}>
+      <button onClick={handleText} style={{ marginRight: "10px" }}>
+      Add Text
+    </button>
       <div className={styles.searchContainer}>
         <div className={styles.wrapperContainer}>
           {bestPost &&
