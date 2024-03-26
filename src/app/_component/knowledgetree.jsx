@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactFlow, {
   addEdge,
   Background,
@@ -23,6 +23,8 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../config/apiConfig";
 import CustomNode from "./customNodes/customNodes";
 import CustomTextNode from "./customNodes/customTextNodes"
+import axios from "axios";
+const arr=[]
 
 const initialNodes = [];
 const initialEdges = [];
@@ -36,6 +38,24 @@ export default function Home() {
   const [edges, setEdges] = useState(initialEdges);
   console.log(nodes)
   const wrapperRef = useRef(null);
+  const fetchBoxes = async ()=>{
+    try{
+      const response=await axios.get("http://localhost:8000/api/v1/loadData",{
+        headers:{
+          "Content-Type": "application/json",
+        }
+      })
+      console.log(response.data)
+      setNodes(response.data.nodes)
+      setEdges(response.data.edges)
+
+    }catch(error){
+      console.error(error)
+    }
+  }
+  useEffect(()=>{
+    fetchBoxes()
+  },[])
   async function onHandleBestPostPreview({ pageParam }) {
     try {
       const response = await api.get(
@@ -109,12 +129,33 @@ export default function Home() {
     };
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
+  const handleSave = async()=>{
+    const boxes={
+      nodes: nodes,
+      edges: edges
+    }
+    try{
+      const response =  await axios.post("http://localhost:8000/api/v1/savedData",boxes,{
+      headers:{
+        "Content-Type": "application/json",
+      }
+
+    })
+    return response.data
+
+    }catch(error){
+      console.error(error)
+    }
+  }
 
   return (
     <div className={styles.background}>
       <button onClick={handleText} style={{ marginRight: "10px" }}>
       Add Text
     </button>
+    <button onClick={handleSave} style={{ marginRight: "10px" }}>
+        Save
+      </button>
       <div className={styles.searchContainer}>
         <div className={styles.wrapperContainer}>
           {bestPost &&
