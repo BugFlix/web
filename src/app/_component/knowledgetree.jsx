@@ -24,8 +24,6 @@ import api from "../config/apiConfig";
 import CustomNode from "./customNodes/customNodes";
 import CustomTextNode from "./customNodes/customTextNodes"
 import axios from "axios";
-const arr=[]
-
 const initialNodes = [];
 const initialEdges = [];
 const customNodeTypes = {
@@ -36,6 +34,8 @@ const customNodeTypes = {
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const [text,setText]=useState("")
+  const[showInput, setShowInput]=useState(false)
   console.log(nodes)
   const wrapperRef = useRef(null);
   const fetchBoxes = async ()=>{
@@ -119,15 +119,15 @@ export default function Home() {
       id,
       type: "text",
       data: {
-        text: "",
-        onChange: ""
+        text: text
       },
-      position: {
+      position: { 
         x: event.clientX - wrapperRef.current.offsetLeft - 100,
         y: event.clientY - wrapperRef.current.offsetTop - 100,
       },
     };
     setNodes((prevNodes) => [...prevNodes, newNode]);
+    setShowInput(false)
   };
   const handleSave = async()=>{
     const boxes={
@@ -147,12 +147,23 @@ export default function Home() {
       console.error(error)
     }
   }
+  const handleChange = (e)=>{
+    const newText=e.target.value
+    setText(newText)
+
+  }
+  const handleAdd=()=>{
+    setShowInput(true)
+  }
 
   return (
     <div className={styles.background}>
+      {showInput&&(<div><input value={text} onChange={handleChange}></input>
       <button onClick={handleText} style={{ marginRight: "10px" }}>
       Add Text
     </button>
+      </div>)}
+    <button onClick={handleAdd}>라벨추가</button>
     <button onClick={handleSave} style={{ marginRight: "10px" }}>
         Save
       </button>
