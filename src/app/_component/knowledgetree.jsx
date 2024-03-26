@@ -22,7 +22,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import api from "../config/apiConfig";
 import CustomNode from "./customNodes/customNodes";
-import CustomTextNode from "./customNodes/customTextNodes"
+import CustomTextNode from "./customNodes/customTextNodes";
 import axios from "axios";
 const initialNodes = [];
 const initialEdges = [];
@@ -34,28 +34,30 @@ const customNodeTypes = {
 export default function Home() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
-  const [text,setText]=useState("")
-  const[showInput, setShowInput]=useState(false)
-  console.log(nodes)
+  const [text, setText] = useState("");
+  const [showInput, setShowInput] = useState(false);
+  console.log(nodes);
   const wrapperRef = useRef(null);
-  const fetchBoxes = async ()=>{
-    try{
-      const response=await axios.get("http://localhost:8000/api/v1/loadData",{
-        headers:{
-          "Content-Type": "application/json",
+  const fetchBoxes = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8000/api/v1/loadData",
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
-      console.log(response.data)
-      setNodes(response.data.nodes)
-      setEdges(response.data.edges)
-
-    }catch(error){
-      console.error(error)
+      );
+      console.log(response.data);
+      setNodes(response.data.nodes || []);
+      setEdges(response.data.edges || []);
+    } catch (error) {
+      console.error(error);
     }
-  }
-  useEffect(()=>{
-    fetchBoxes()
-  },[])
+  };
+  useEffect(() => {
+    fetchBoxes();
+  }, []);
   async function onHandleBestPostPreview({ pageParam }) {
     try {
       const response = await api.get(
@@ -112,61 +114,67 @@ export default function Home() {
     setNodes((prevNodes) => [...prevNodes, newNode]);
   };
 
-
   const handleText = () => {
     const id = (nodes.length + 1).toString();
     const newNode = {
       id,
       type: "text",
       data: {
-        text: text
+        text: text,
       },
-      position: { 
+      position: {
         x: event.clientX - wrapperRef.current.offsetLeft - 100,
         y: event.clientY - wrapperRef.current.offsetTop - 100,
       },
     };
     setNodes((prevNodes) => [...prevNodes, newNode]);
-    setShowInput(false)
+    setShowInput(false);
   };
-  const handleSave = async()=>{
-    const boxes={
+  const handleSave = async () => {
+    const boxes = {
       nodes: nodes,
-      edges: edges
+      edges: edges,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/savedData",
+        boxes,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
     }
-    try{
-      const response =  await axios.post("http://localhost:8000/api/v1/savedData",boxes,{
-      headers:{
-        "Content-Type": "application/json",
-      }
-
-    })
-    return response.data
-
-    }catch(error){
-      console.error(error)
-    }
-  }
-  const handleChange = (e)=>{
-    const newText=e.target.value
-    setText(newText)
-
-  }
-  const handleAdd=()=>{
-    setShowInput(true)
-  }
+  };
+  const handleChange = (e) => {
+    const newText = e.target.value;
+    setText(newText);
+  };
+  const handleAdd = () => {
+    setShowInput(true);
+  };
 
   return (
     <div className={styles.background}>
-      {showInput&&(<div><input value={text} onChange={handleChange}></input>
-      <button onClick={handleText} style={{ marginRight: "10px" }}>
-      Add Text
-    </button>
-      </div>)}
-    <button onClick={handleAdd}>라벨추가</button>
-    <button onClick={handleSave} style={{ marginRight: "10px" }}>
-        Save
-      </button>
+      {showInput && (
+        <div className={styles.input}>
+          <input value={text} onChange={handleChange}></input>
+          <button onClick={handleText} style={{ marginRight: "10px" }}>
+            Add Text
+          </button>
+        </div>
+      )}
+      <div className={styles.menu}>
+        <button onClick={handleAdd}>라벨추가</button>
+        <button onClick={handleSave} style={{ marginRight: "10px" }}>
+          저장
+        </button>
+      </div>
+
       <div className={styles.searchContainer}>
         <div className={styles.wrapperContainer}>
           {bestPost &&
@@ -221,7 +229,7 @@ export default function Home() {
         onConnect={onConnect}
         nodeTypes={customNodeTypes}
       >
-       <Background  />
+        <Background />
         <Controls />
         <MiniMap />
       </ReactFlow>
