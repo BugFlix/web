@@ -1,0 +1,15 @@
+{
+  "autoComplete": [
+    { "id": 1, "keyword": "알고리즘" },
+    { "id": 2, "keyword": "코딩" },
+    { "id": 3, "keyword": "3D" },
+    { "id": 4, "keyword": "코틀린" },
+    { "id": 5, "keyword": "자바스크립트" },
+    { "id": 6, "keyword": "자바" },
+    { "id": 7, "keyword": "자바" },
+    { "id": 8, "keyword": "자바" }
+  ],
+  "routes": {
+    "/autocomplete": "/autoComplete?_embed=autoComplete"
+  }
+}

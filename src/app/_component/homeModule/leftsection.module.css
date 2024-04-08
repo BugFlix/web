@@ -1,0 +1,447 @@
+.leftSection{
+    margin-left: 100px;
+    /* border: 1px solid rgb(68, 9, 9); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: inherit;
+    gap: 20px;
+    @media only screen and (min-width: 2300px) {
+        position: relative;
+        left: -10vw;
+    }
+    @media only screen and (min-width: 2000px) {
+        margin-left: -200px;
+        
+    }
+    @media only screen and (min-width: 1900px) {
+        margin-left: -50px;
+        
+    }
+    @media only screen and (min-width: 1800px) {
+        margin-left: -20px;
+        
+    }
+    @media only screen and (max-width: 1400px) {
+        margin-left: 200px;
+        
+    }
+    @media only screen and (max-width: 1000px) {
+        margin-left: 200px;
+    }
+    @media only screen and (max-width: 440px) {
+    }
+    @media only screen and (max-width: 440px) {
+       margin-left: 0;
+    }
+    
+
+}
+.postTab{
+    margin-top: 2vh;
+    margin-left: 8vw;
+    width: 43.7vw;
+    height: 23.3vh;
+    display: flex;
+    flex-direction: column;
+    background: #FDFDFD;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    @media only screen and (max-width: 1100px) {
+        height: 18vh;
+    }
+    @media only screen and (max-width: 440px) {
+        margin-top: 0;
+        margin-left: 0;
+        align-items: center;
+        height: 0px;
+     }
+    
+    
+    }
+    .searchBar{
+    width: 169px;
+    height: 23px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    margin-top: 10px;
+    background: #f2f2f5;
+    border-radius: 100px;
+    gap: 10px;
+    @media only screen and (max-width: 440px) {
+        position: fixed;
+        left: 30px;
+        width: 160px;
+        height: 40px;
+        margin-top:17.5px;
+        margin-left: 0;
+        z-index: 1;
+        border-radius: 12px;
+        background: #222222;
+    }
+  
+    
+    }
+    .searchBar img{
+    margin-left: 10px;
+    width: 10px;
+    height: 10px;
+    }
+    .searchBar span{
+    
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #737991;
+    @media only screen and (max-width: 440px) {
+     color: #FFFFFF;
+    }
+    
+    
+    }
+    .popularHeader{
+        margin-top: 20px;
+        margin-left: 20px;
+        width: inherit;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        align-items: center;
+        @media only screen and (max-width: 440px) {
+            display: none;
+         }
+        
+    }
+    .popularHeader h1{
+        width: 30vw;
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #080808;
+    @media only screen and (max-width: 1300px) {
+        width: 25vw;
+        
+    }
+    @media only screen and (max-width: 1200px) {
+        width: 25vw;
+        
+    }
+    @media only screen and (max-width: 1000px) {
+        width: 20vw;
+    }
+    @media only screen and (max-width: 440px) {
+        display: none;
+     }
+    }
+    .trendHeader{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        @media only screen and (max-width: 440px) {
+            display: none;
+         }
+    
+    }
+    .trendHeader img{
+    width: 29px;
+    height: 32px;
+    
+    }
+    .trendHeader span{
+    
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #080808;
+    
+    
+    }
+    .tag{
+        position: absolute;
+        margin-top: 65px;
+        display: flex;
+        gap: 10px;
+    }
+    .tag span{
+        width:auto;
+        min-width: 40px;
+        font-size: 8px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        height: 15px;
+        align-items: center;
+        border-radius: 10px;
+        border: #b3b3b3 1px solid;
+        color: #b3b3b3;
+    }
+    .popularTab{
+        display: flex;
+        width: 130px;
+        justify-content: center;
+        gap: 13px;
+     
+        @media only screen and (max-width: 440px) {
+            position: fixed;
+            margin-top: 90px;
+            left: 20px;
+            width: 150px;
+            gap: 20px;
+         }
+    }
+    .popularTab span{
+   width: 30x;
+    height: 18px;
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    align-items: center;
+    text-align: center;
+    color: #BABABC;
+    cursor: pointer;
+    /* border-bottom: 1px solid #000000; */
+
+    @media only screen and (max-width: 440px) {
+        width: 50px;
+        height: 18px;
+        
+        font-family: 'Overpass';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 25px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        
+        
+            cursor: pointer;
+            /* border-bottom: 1px solid #000000; */
+     }
+    }
+    .popularTab :nth-child(1){
+        color: #000000;
+    }
+    .postContainer{
+        margin-top: 20px;
+        width: 100%;
+        height: 72vh;
+        display: flex;
+        justify-content: center;
+        overflow-y: scroll;
+        
+          @media only screen and (max-width: 440px) {
+            margin-top: 120px;
+            width: 100vw;
+            height: auto;
+        }
+     
+    }
+    .wrapperContainer{
+        margin-left: 130px;
+        width: inherit;
+        height: 72vh;
+         display: grid;
+         grid-template-columns: repeat(3,1fr);
+         grid-gap: 30px;
+         grid-row-gap: 20px;
+         /* border: 1px solid black; */
+         
+         @media only screen and (max-width: 1400px) {
+             margin-left: 110px;
+         }
+         @media only screen and (max-width: 1100px) {
+             margin-left: 85px;
+         }
+         @media only screen and (max-width: 440px) {
+           margin-left: 0px;
+           height: inherit;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           gap: 20px;
+        }
+         
+    }
+    .wrapper{
+        display: flex;
+        flex-direction: column;
+     cursor: pointer;
+    width: 15vw;
+    align-items: center;
+    height: 42.5vh;
+    gap: 0px;
+
+    background: #FFFFFF;
+    border: 1px solid #ebebec;
+border-radius: 1vw;
+
+     @media only screen and (max-width: 440px) {
+        width: 90vw;
+        height: 500px;
+        border-radius: 24px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+     }
+  
+    }
+    .previewHeader{
+        display: flex;
+        margin-top: 5px;
+        align-items: center;
+        justify-content:start;
+        gap: 7px;
+        @media only screen and (max-width: 440px) {
+            position: relative;
+            top: 430px;
+            gap: 20px;
+        }
+
+    }
+    .profileCircle{
+        /* Ellipse 831 */
+
+box-sizing: border-box;
+width: 2vw;
+height: 4vh;
+border: 1px solid #FFFFFF;
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+border-radius: 1vw;
+overflow: hidden;
+    }
+    .profileCircle img{
+        width: inherit;
+        height: inherit;
+    }
+    .likes{
+        width: 1vw;
+        height: 2vh;
+
+    }
+    .likes img{
+        width: inherit;
+        height: inherit;
+    }
+    .previewHeader span, .previewHeader b{
+        font-size: 0.75vw;
+
+    }
+    .previewHeader b{
+        color: rgb(18, 18, 18);
+    }
+    .previewHeader span{
+        color: #868e96;
+    }
+    .previewBox{
+        margin-top: 5px;
+        box-sizing: border-box;
+        width: 14.5vw;
+        height: 27.5vh;
+
+        border: 1px solid rgba(249, 247, 247, 0.03);
+        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 15px;
+        overflow: hidden;
+
+       
+        @media only screen and (max-width: 440px) {
+            margin-top: -29px;
+            box-sizing: border-box;
+            width: 87.5vw;
+            height: 35vh;
+            border-radius:24px;
+
+         }
+
+    }
+    .previewBox img{
+        width: inherit;
+        height: inherit;
+        
+    }
+    .card{
+    box-sizing: border-box;
+    width: 13vw;
+
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    align-items: center;
+    border: 1px solid rgba(249, 247, 247, 0.03);
+    backdrop-filter: blur(5px);
+    border-radius: 20px;
+    @media only screen and (max-width: 440px) {
+        margin-top: 0px;
+    width: 57.5vw;
+    height: 150px;
+    backdrop-filter: none;
+    background: none;
+    /* Note: backdrop-filter has minimal browser support */
+    border-radius: 0px;
+    box-shadow: none;
+    gap: 5px;
+
+
+ }
+
+    }
+    .card h3{
+width: 12.5vw;
+font-family: 'Padauk';
+font-style: normal;
+font-weight: 700;
+font-size: 0.75vw;
+line-height: 15px;
+display: flex;
+align-items: center;
+
+color: #000000;
+@media only screen and (max-width: 440px) {
+   font-size: 1vw;
+   width: 79vw;
+   line-height: 25px;
+   
+}
+
+    }
+    .tags{
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        width: 100%;
+        overflow: hidden;
+
+    
+    }
+    .tags span{
+
+        font-size: 0.5vw;
+        padding-left: 5px;
+        padding-right: 5px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        height: 15px;
+        align-items: center;
+        border-radius: 10px;
+        border: #b3b3b3 1px solid;
+        color: #b3b3b3;
+    }
