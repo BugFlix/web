@@ -1,0 +1,199 @@
+.rightSection{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   gap: 90px;
+    @media only screen and (max-width: 440px) {
+        gap: 0px;
+    }
+}
+
+.box{
+margin-top: 50px;
+width: 259px;
+height: 144px;
+display: flex;
+gap: 10px;
+background: #FAFCFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 10px;
+@media only screen and (max-width: 440px) {
+    position: absolute;
+    right: 0;
+   height: 40px;
+    top: 0;
+    margin-top: 12.5px;
+    gap: 5px;
+    align-items: center;
+    background: none;
+    box-shadow: none;
+    width: 180px;
+    z-index: 99;
+}
+
+}
+.profileCircle{
+margin-left: 10px;
+margin-top: 3px;
+width: 34px;
+height: 34px;
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+border-radius: 20px;
+overflow: hidden;
+@media only screen and (max-width: 440px) {
+}
+
+}
+.profileCircle img{
+    width: inherit;
+    height: inherit;
+}
+.box span{
+    margin-top: 12.5px;
+font-family: 'Noto Serif Thai';
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+line-height: 21px;
+text-align: center;
+
+color: #4B4F50;
+
+
+}
+.profileMenu{
+display: flex;
+margin-top: 15px;
+margin-left: 80px;
+gap: 5px;
+@media only screen and (max-width: 440px) {
+margin-left: 0;
+}
+}
+.profileMenu :nth-child(1){
+    background: url(../../../asset/images/main/user.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.profileMenu :nth-child(2){
+    background: url(../../../asset/images/main/arrow.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.notificationBox{
+    display: flex;
+    gap: 15px;
+    @media only screen and (max-width: 440px) {
+       position: absolute;
+       top:80px;
+       right: 30px;
+    }
+}
+.alarmBox{
+width: 122px;
+height: 122px;
+display: flex;
+
+background: #FBB528;
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+@media only screen and (max-width: 440px) {
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;;
+}
+
+
+}
+.alarmBox img{
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 35px;
+    height: 35px;
+    @media only screen and (max-width: 440px) {
+        width: 25px;
+        height: 25px;
+       margin-top: 0;
+       margin-left: 0;
+    }
+}
+.alarmBox span{
+width: 68px;
+height: 22px;
+justify-content: end;
+font-family: 'Overpass';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 30px;
+display: flex;
+margin-top: 80px;
+text-align: center;
+
+color: #FFFFFF;
+@media only screen and (max-width: 440px) {
+    display: none;
+}
+
+
+}
+.messageBox{
+width: 122px;
+height: 122px;
+display: flex  ;
+background: #02C896;
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+@media only screen and (max-width: 440px) {
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;;
+}
+
+}
+.messageBox img{
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 35px;
+    height: 35px;
+    @media only screen and (max-width: 440px) {
+        width: 25px;
+        height: 25px;
+       margin-top: 0;
+       margin-left: 0;
+    }
+}
+.messageBox span{
+width: 68px;
+height: 22px;
+justify-content: end;
+font-family: 'Overpass';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 30px;
+display: flex;
+align-items: center;
+text-align: center;
+margin-top: 80px;
+color: #FFFFFF;
+@media only screen and (max-width: 440px) {
+    display:none;
+}
+
+}

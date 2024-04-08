@@ -1,0 +1,182 @@
+
+
+.container{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+    background: #fff
+
+}
+
+.leftWrapper{
+    position: fixed;
+    display: flex;
+
+    z-index: 9999;
+}
+
+.leftSection{
+    width: 200px;
+    height: 100dvh;
+    background: #f7f7f7;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: hidden;
+
+       
+}
+.menubarButton{
+margin-top: 40px;
+width: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 26px;
+
+background: #F7F7F7;
+border-radius: 0px 3px 3px 0px;
+
+
+}
+.menubarButton img{
+    width: 10px;
+    height: 10px;
+    object-fit: contain;
+}
+.leftFixedSection{
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.logoContainer{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.ellipse{
+width: 50px;
+height: 50px;
+filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+border-radius: 25px;
+margin-left: 20px;
+overflow: hidden;
+
+}
+.ellipse img{
+    width: inherit;
+    height: inherit;
+}
+.logoContainer b{
+
+font-family: 'Padauk';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 27px;
+
+color: #000000;
+
+
+}
+.line{
+width: 160px;
+height: 2px;
+
+background: #F1F1F5;
+
+}
+.menuHeader{
+    display: flex;
+    width: inherit;
+    align-items: center;
+    height: 50px;
+}
+.menuList{
+    margin-top: 20px;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.menuList div{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+.menuList img{
+    width: 22px;
+    height: 22px;
+}
+.menuList span{
+font-family: 'Padauk';
+font-style: normal;
+font-weight: 700;
+display: flex;
+font-size: 14px;
+line-height: 21px;
+color: rgba(153, 153, 153, 0.6);
+
+}
+.menuCircleRed{
+    width: 40px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F50606;
+    border-radius: 20px;
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+}
+.menuCircleGreen{
+    width: 40px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #3ebe11;
+    border-radius: 20px;
+    color: white;
+    font-size: 10px;
+    font-weight: 400;
+}
+.menuHeader span{
+    
+margin-left: 20px;
+font-family: 'Padauk';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 21px;
+
+
+color: #999999;
+}
+.mainWrapper{
+    display: flex;
+    align-items: flex-start;
+    height: inherit;
+    width: inherit
+}
+
+.mainSectionInner{
+    height: inherit;
+    width: inherit;
+    display: flex;
+
+
+}
+.main{
+    width: inherit;
+    height: 100%;
+}

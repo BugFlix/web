@@ -1,0 +1,44 @@
+.chartContainer {
+    position: absolute;
+    right:200px;
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    width: 200px;
+    
+  }
+  
+  .chart {
+    width: 100px;
+    height: 1vh;
+    display: flex;
+
+    
+  }
+  
+  .labelsContainer {
+    margin-left: 20px; /* Adjust spacing between chart and labels */
+  }
+  
+  .chartLabel {
+    width: 200px;
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: bold;
+  }
+  .labelsContainer :nth-child(1){
+    color:#FFAFCA
+  }
+  .labelsContainer :nth-child(2){
+    color:#546595
+  }
+  .labelsContainer :nth-child(3){
+    color:#a9a9a9
+  }
+  .labelsContainer :nth-child(4){
+    color:#81D9C0
+  }
+  .labelsContainer :nth-child(5){
+    color:#b0b4d3
+  }
+  
