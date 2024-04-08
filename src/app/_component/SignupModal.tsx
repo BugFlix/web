@@ -29,7 +29,7 @@ export default function SignupModal() {
 
   const onSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    axios.post('http://10.0.0.13:8080/api/v1/users', {
+    axios.post('https://apis.scrabler.com/api/v1/users', {
       email: email,
       password: password,
       nickname: nickname,
