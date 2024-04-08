@@ -2,7 +2,7 @@ import axios from "axios";
 
 //토큰이 불필요한 경우
 const api = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: "https://apis.scrabler.com",
   headers: {
     "Content-Type": "application/json",
   },
