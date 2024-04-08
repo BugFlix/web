@@ -11,7 +11,7 @@ const CallbackPage = () => {
         const code = encodeURIComponent(urlParams.get('code'));
         if (code) {
             // Send authorization code to the back end
-            fetch(`${process.env.BASE_URL}/api/login/oauth2/code/google?code=${code}`, {
+            fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login/oauth2/code/google?code=${code}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
