@@ -64,7 +64,7 @@ export default function LoginModal(){
     }
     }
     const auth=()=>{
-        const googleAuthUrl = process.env.OAUTH_KEY // Specify the scopes you need
+        const googleAuthUrl = process.env.NEXT_PUBLIC_OAUTH_KEY // Specify the scopes you need
         window.open(googleAuthUrl, '_self');
     }
     
