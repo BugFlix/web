@@ -37,7 +37,7 @@ export default function LeftSection(){
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
             try {
-                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=12`,{
+                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=5`,{
                     headers:{
                         "Content-Type":"application/json",
 
@@ -146,7 +146,7 @@ export default function LeftSection(){
                                     
                                  </div>
                             </div>
-                            {/* <div ref={ref} style={{height:50}}></div> */}
+                            <div ref={ref} style={{height:50}}></div>
                     </div>
                     
                     ))
