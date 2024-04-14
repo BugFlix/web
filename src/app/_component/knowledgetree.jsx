@@ -26,7 +26,7 @@
   import CustomNode from "./customNodes/customNodes";
   import CustomTextNode from "./customNodes/customTextNodes";
   import axios from "axios";
-  import { useSelector } from "react-redux";
+  import { useDispatch, useSelector } from "react-redux";
  
   const initialNodes = [];
   const initialEdges = [];
@@ -37,6 +37,8 @@
 
   export default function Home() {
     const nodeText = useSelector((state) => state.nodeData.nodes);
+    const canvasId=useSelector((state)=>state.tree.canvasId)
+    const key=useSelector((state)=>state.tree.key)+1
     const [nodes, setNodes] = useNodesState(initialNodes);
     const [edges, setEdges] = useEdgesState(initialEdges);
     const [text,setText]=useState("")
@@ -46,11 +48,11 @@
       console.log("선택된 노드의 ID:", nodeId);
       // 다른 작업 수행 가능
     };
-   
+
     const fetchBoxes = async () => {
       try {
         const response = await axios.get(
-          "https://weblog-project.s3.ap-northeast-2.amazonaws.com/knowledgeTree/1712466191554.json",
+          `https://weblog-project.s3.ap-northeast-2.amazonaws.com/knowledgeTree/${key}.json`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -176,21 +178,9 @@
       const boxes = {
         nodes: nodes,
         edges: edges,
+        name:key
       };
-      // try {
-      //   const response = await axios.post(
-      //     "http://localhost:8000/api/v1/savedData",
-      //     boxes,
-      //     {
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //     }
-      //   );
-      //   return response.data;
-      // } catch (error) {
-      //   console.error(error);
-      // }
+
       try {
         // 두 번째 단계: boxes 데이터를 서버에 전송
         const response2 = await axios.post('/api/uploadtree', boxes, {
