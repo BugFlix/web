@@ -3,9 +3,15 @@
 import Image from "next/image"
 import styles from "./knowledgePreview.module.css"
 import searchIcon from "@/asset/images/main/search.png"
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import Recent from "./knowledgePreviewModule/recent";
+import Mine from "./knowledgePreviewModule/mine";
+
+
 export default function knowledgePreview(){
+
     const [divCount, setDivCount] = useState(0);
+
       // div를 추가하는 함수
   const addDiv = () => {
     setDivCount(divCount + 1);
@@ -38,27 +44,9 @@ export default function knowledgePreview(){
                 </div>
                 </div>
                 <div className={styles.boardLayout}>
-                    <div className={styles.board}>
-                        <div className={styles.board1}>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div className={styles.board}></div>
+                  <Mine/>
+                  <Recent/>
+                   
                 </div>
             </div>
         </div>

@@ -29,6 +29,7 @@ export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
     const [datePostMenu, setDatePostMenu]=useState("WEEKLY")
     const [isSearchbar,setIsSearchbar]=useState(false)
+    let [page,setPageParam]=useState(0)
     const dispatch = useDispatch()
     const HandleSearch=()=>{
         setIsSearchbar(true)
@@ -37,7 +38,7 @@ export default function LeftSection(){
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
             try {
-                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=12`,{
+                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${page}&limit=12`,{
                     headers:{
                         "Content-Type":"application/json",
 
@@ -57,14 +58,21 @@ export default function LeftSection(){
             // }
         }
         //리액트쿼리를 이용한 데이터 헨들 무한스크롤
-        const {data:bestPost, isLoading, isError, isSuccess,refetch, fetchNextPage, hasNextPage, isFetching  }=useInfiniteQuery<Post[],object,InfiniteData<Post[]>,[_1: string],number>({
-            queryKey:["bestPostPreview"],
+        const {
+            data: bestPost,
+            isLoading,
+            isError,
+            isSuccess,
+            refetch,
+            fetchNextPage,
+            hasNextPage,
+            isFetching
+        } = useInfiniteQuery<Post[], object, InfiniteData<Post[]>, [_1: string], number>({
+            queryKey: ["bestPostPreview"],
             queryFn: onHandleBestPostPreview,
-            initialPageParam:0,
-            getNextPageParam: (lastpage)=>lastpage.at(-1)?.postId,
-       
-    
-        })
+            initialPageParam: 0,
+            getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.postId, // Adjusted this line
+        });
     
         //스클롤 감지 하단으로 가면 다음 요청 보내기
         const {ref,inView}=useInView({
@@ -72,12 +80,12 @@ export default function LeftSection(){
             delay:1000,
     
         });
-        useEffect(()=>{
+        useEffect(() => {
             if (inView && !isFetching && hasNextPage) {
+                setPageParam(++page)
                 fetchNextPage();
-              }
-    
-        },[inView,isFetching,hasNextPage,fetchNextPage])
+            }
+        }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
         const onHandlePost =(postid:number)=>{
             console.log(postid)
@@ -93,6 +101,7 @@ export default function LeftSection(){
         }
         const handlePostTab= (tab:any)=>{
             setDatePostMenu(tab)
+            setPageParam(0)
             refetch();  
         }
     return(
