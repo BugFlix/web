@@ -37,7 +37,7 @@ export default function LeftSection(){
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
             try {
-                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=5`,{
+                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=12`,{
                     headers:{
                         "Content-Type":"application/json",
 
@@ -115,9 +115,9 @@ export default function LeftSection(){
                     </div>
                 </div>
                 <div className={styles.popularTab}>
-                        <span onClick={()=>handlePostTab("WEEKLY")}>주간</span>
-                        <span onClick={()=>handlePostTab("MONTHLY")}>월간</span>
-                        <span onClick={()=>handlePostTab("YEARLY")}>연간</span>
+                        <span onClick={()=>handlePostTab("WEEKLY")} style={{color:datePostMenu=="WEEKLY"?"#000000":"#BABABC"}}>주간</span>
+                        <span onClick={()=>handlePostTab("MONTHLY")} style={{color:datePostMenu=="MONTHLY"?"#000000":"#BABABC"}}>월간</span>
+                        <span onClick={()=>handlePostTab("YEARLY")} style={{color:datePostMenu=="YEARLY"?"#000000":"#BABABC"}}>연간</span>
                 </div>
             </div>
             {/* 포스트 컨테이너 */}
