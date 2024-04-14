@@ -1,7 +1,7 @@
 
-import KnwoledgeTree from "@/app/_component/knowledgetree"
+import Preview from "@/app/_component/knowledgePreview"
 export default function treeLayout(){
     return(
-        <KnwoledgeTree/>
+        <Preview/>
     )
 }
