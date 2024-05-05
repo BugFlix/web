@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import {useContext, useState } from "react"
 import styles from "./myprofile.module.css"
 import MyProfile from "./myprofile/myprofile"
 import profileImg from "@/asset/images/main/kwang.jpg"
@@ -7,6 +7,7 @@ import alarmImg from "@/asset/images/main/notification.png"
 import messageImg from "@/asset/images/main/message.png"
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
+import { AuthContext } from "@/app/_component/Provider/authProvider"
 import axios from "axios"
 import settingImg from "@/asset/images/main/setting.png"
 import calendarImg from "@/asset/images/main/calendar.png"
@@ -22,6 +23,7 @@ type profileType={
 
 export default function MyComponentProfile(){
     const accessToken=localStorage.getItem("accestoken")
+    const {nickname}=useContext(AuthContext)
     async function onHandleProfile(){
         try{
             const response= await api.get("api/v1/profiles/mine",{
@@ -58,6 +60,19 @@ export default function MyComponentProfile(){
                 });
 
                 console.log(response.data);
+                const body1={
+                    nickname:nickname,
+                    imageUrl:response.data.fileUrl,
+                    phoneNumber:"01076549532"
+                }
+                const response2=await api.put("/api/v1/profile",body1,{
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    }
+                })
+                console.log(response2.data)
+               window.location.reload()
             } catch (error) {
                 console.error('Error uploading image:', error);
             }
@@ -71,7 +86,7 @@ export default function MyComponentProfile(){
                         <div className={styles.profiletop}>
                         <input type="file" onChange={handleProfileChange} />
                             <div className={styles.profileCircle}>
-                                <Image src={profileImg} alt="profileImg"></Image>
+                                <img src={profileData?.imageUrl} alt="profileImg"></img>
                             </div>
                             <div className={styles.info}>
                                 <b>{profileData?.nickname}</b>

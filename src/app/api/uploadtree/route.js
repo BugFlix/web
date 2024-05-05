@@ -42,7 +42,7 @@ export async function POST(request) {
     console.log(jsonData);
     const jsonString = JSON.stringify(jsonData); // JSON 데이터를 문자열로 변환
     const buffer = Buffer.from(jsonString, "utf-8"); // 버퍼로 변환
-    const fileName = `${jsonData.name}.json`; // 파일명 설정 (예: 현재 시간을 파일명으로 사용)
+    const fileName = `${Date.now()}.json`; // 파일명 설정 (예: 현재 시간을 파일명으로 사용)
     await uploadS3(buffer, fileName); // AWS S3에 업로드
     const fileUrl = s3BucketUrl + `knowledgeTree/${fileName}`; // 파일의 URL 생성
     return NextResponse.json({ success: true, fileName, fileUrl });

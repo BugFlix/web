@@ -1,5 +1,5 @@
 import Image from "next/image"
-import styles from "./myleftsection.module.css"
+import styles from "./profileLeftSection.module.css"
 import likesIcon from "@/asset/images/likestar.png"
 import profileImg from "@/asset/images/main/kwang.jpg"
 import followClose from "@/asset/images/followclose.png"
@@ -7,13 +7,14 @@ import { useEffect,useState,useContext} from "react"
 import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { AuthContext } from "@/app/_component/Provider/authProvider";
 import { useRouter } from "next/navigation"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { setPostId } from "@/app/slices/postSlice"
 import { setDataPost } from '@/app/slices/datapost';
 import api from "@/app/config/apiConfig"
 import Post from "../post"
 import axios from "axios"
 import { useInView } from "react-intersection-observer"
+import { RootState } from "@/app/reducers/rootReducer"
 
 interface Post {
     postId: number;
@@ -57,9 +58,8 @@ interface Post {
       return formatDate(dateString);
     }
   };
-export default function MyLeftSection (){
+export default function ProfileLeftSection (){
 
-    const {nickname } = useContext(AuthContext);
     const dispatch = useDispatch()
     const url: string = window.location.href;
     const encodeUrl=encodeURIComponent(url)
@@ -67,7 +67,8 @@ export default function MyLeftSection (){
     const router=useRouter()
     const [follwerView, setFollowerView]=useState(false)
     const [follwingView, setFollowingView]=useState(false)
-  
+    const nickname=useSelector((state:RootState)=>state.profile.nickname)
+    console.log(nickname)
     const accessToken=localStorage.getItem("accestoken")
     async function onHandleMyPostPreview({ pageParam }: { pageParam?: number }) {
       // try {
@@ -84,7 +85,7 @@ export default function MyLeftSection (){
       // }
   
       try{
-        const response =await api.get("/api/v1/posts/mine", {
+        const response =await api.get(`/api/v2/posts/users/${nickname}?&offset=${0}&limit=12`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`
@@ -96,6 +97,27 @@ export default function MyLeftSection (){
         console.log(error)
   }
     }
+
+    async function onHandleProfileData(){
+      try{
+        const response = await api.get(`/api/v1/profiles/users/${nickname}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        console.log(response.data)
+        return response.data
+      }
+      catch(error){
+        console.error(error)
+      }
+    }
+
+    const {data: profileData}=useQuery<any>({
+      queryKey:["profileData"],
+      queryFn: onHandleProfileData
+    })
     
     // //리액트쿼리를 이용한 데이터 헨들 무한스크롤
     const {data:dataPost, isLoading, isError, isSuccess, fetchNextPage, hasNextPage, isFetching  }=useInfiniteQuery<Post[],object,InfiniteData<Post[]>,[_1: string],number>({
@@ -104,7 +126,7 @@ export default function MyLeftSection (){
         initialPageParam:0,
         getNextPageParam: (lastpage)=>lastpage.at(1)?.postId,
     })
-    //스클롤 감지 하단으로 가면 다음 요청 보내기
+    // 스클롤 감지 하단으로 가면 다음 요청 보내기
     const {ref,inView}=useInView({
         threshold:0,
         delay:1000,
@@ -119,7 +141,7 @@ export default function MyLeftSection (){
 
     async function onHandleFollwer(){
       try{
-          const repsonse= await api.get("/api/v1/follows/mine/follower ",{
+          const repsonse= await api.get(`/api/v1/follows/${nickname}/follower`,{
               headers:{
                   "Content-Type":"application/json",
                   Authorization: `Bearer ${accessToken}`,
@@ -135,7 +157,7 @@ export default function MyLeftSection (){
 
   async function onHandleFollowing(){
       try{
-          const response = await api.get("/api/v1/follows/mine/following",{
+          const response = await api.get(`/api/v1/follows/${nickname}/following`,{
               headers:{
                   "Content-Type":"application/json",
                   Authorization: `Bearer ${accessToken}`,
@@ -148,27 +170,6 @@ export default function MyLeftSection (){
           console.error(error)
       }
   }
-
-  async function onHandleDeleteFollowing(nickname:any){
-
-    try{
-      const response=await api.delete("/api/v1/follows/following",{
-        data:{
-          nickname:nickname
-        },
-        headers:{
-          "Content-Type":"application/json",
-          Authorization: `Bearer ${accessToken}`,
-      }
-      })
-      
-      console.log(response.data)
-     
-    }
-    catch(error){
-      console.error(error)
-    }
-  }
     const {data:followers}=useQuery<any>({
       queryKey:["followerKey"],
       queryFn:onHandleFollwer,
@@ -177,11 +178,6 @@ export default function MyLeftSection (){
       queryKey:["followingKey"],
       queryFn: onHandleFollowing
   })
-
-  const {data: deleteFollowing}=useQuery<any>({
-    queryKey:["deleteFollowingKey"],
-    queryFn: onHandleDeleteFollowing
-})
 
     const onHandlePost = (postId: number) => {
         console.log(postId)
@@ -197,21 +193,38 @@ export default function MyLeftSection (){
     }
     const onHandleFollowingView=()=>{
       setFollowingView(true)
-      
     }
     const onHandleCloseFollowingView=()=>{
       setFollowingView(false)
-      window.location.reload()
+    }
+    const addFollow = async ()=>{
+      const body={
+        nickname:nickname
+      }
+      try{
+        const response = await api.post("/api/v1/follows",body,{
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${accessToken}`,
+        }
+        })
+        console.log(response.data)
+      }
+      catch{
+
+      }
     }
     return(
         <div className={styles.innerView}>
             <div className={styles.myProfile}>
                 <div className={styles.header}>
-                    <Image src={profileImg} alt=""/>
+                  
+                    <img src={profileData?.imageUrl} alt=""/>
                     <div className={styles.profile}>
-                        <span>{nickname}</span>
-                        <span>sgky0511@naver.com</span>
+                        <span>{profileData?.nickname}</span>
+                        <span>{profileData?.email}</span>
                     </div>
+                    <button onClick={addFollow}>팔로우</button>
                     <div className={styles.followers}>
                         <div>
                             <span>999</span>
@@ -223,8 +236,8 @@ export default function MyLeftSection (){
                             <span>팔로워</span>
                         </div>
                         <div onClick={onHandleFollowingView}>
-                            {/* <span>{following.length}</span> */}
                             <span>{following?.length}</span>
+                         
                             <span>팔로잉</span>
                         </div>
                     </div>
@@ -280,7 +293,7 @@ export default function MyLeftSection (){
                   <div key={index} className={styles.followerListWrapper}>
                     <div className={styles.followerCircle}></div>
                     <span>{value.nickname}</span>
-                    <button onClick={()=>onHandleDeleteFollowing(value?.nickname)}>팔로잉</button>
+                    <button>팔로잉</button>
                   </div>
                  </div>
                 ))}
@@ -297,7 +310,7 @@ export default function MyLeftSection (){
                   <div key={index} className={styles.followerListWrapper}>
                     <div className={styles.followerCircle}></div>
                     <span>{value.nickname}</span>
-                    <button onClick={()=>{onHandleDeleteFollowing(value?.nickname)}}>팔로잉</button>
+                    <button>팔로잉</button>
                   </div>
                  </div>
                 ))}

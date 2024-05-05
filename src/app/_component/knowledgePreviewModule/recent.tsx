@@ -85,7 +85,9 @@ const onHandleTree=async(canvasId:number,key:string)=>{
                             <div key={index} onClick={()=>onHandleTree(value.canvasId,value.key)}>{value.title}</div>
                           ))
                         ))}
+                               
       </div>
+
     </div>
   );
 }
