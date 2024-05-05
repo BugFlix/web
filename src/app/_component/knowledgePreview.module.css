@@ -75,3 +75,54 @@ border-radius: 15px;
     
     
     }
+
+    .addView{
+        position: absolute;
+        top:0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .addContainer{
+    width: 400px;
+    height: 400px;
+    background: #ebebec;
+    border-radius:5%;
+    display: flex;
+    flex-direction: column;
+    }
+    .addContainer header{
+        height: 10%;
+        border-bottom: 1px solid rgb(219, 219, 219);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+    }
+    .addContainer header span{
+        position: absolute;
+    }
+    .addContainer header button{
+        position: relative;
+        left: 36%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    .addContainer header button:hover{
+        scale: 1.1;
+    }
+    .addContainer button img{
+        width: inherit;
+        height: inherit;
+        object-fit: contain;
+        object-position: center;
+    }

@@ -11,7 +11,7 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRETE,
   },
 });
-
+const s3BucketUrl = "https://weblog-project.s3.ap-northeast-2.amazonaws.com/";
 // Multer 설정
 const upload = multer({
   storage: multerS3({
@@ -46,7 +46,8 @@ export async function POST(request) {
     }
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = await uploadS3(buffer, file.name);
-    return NextResponse.json({ success: true, fileName });
+    const fileUrl = s3BucketUrl + `profile/${fileName}`; // 파일의 URL 생성
+    return NextResponse.json({ success: true, fileName, fileUrl });
   } catch (error) {
     return NextResponse.json({ error });
   }

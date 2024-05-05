@@ -11,6 +11,7 @@ import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useInView } from "react-intersection-observer"
 import { useDispatch } from "react-redux"
 import { setPostId } from "@/app/slices/postSlice"
+import { setNickname } from "@/app/slices/profileSlice"
 import axios from "axios"
 import api from "@/app/config/apiConfig"
 import Search from "../search"
@@ -86,23 +87,33 @@ export default function LeftSection(){
                 fetchNextPage();
             }
         }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
+        //포스트 라우터
         const onHandlePost =(postid:number)=>{
             console.log(postid)
             if(isLogin){
                 router.push(`/${nickname}/dashboard/home/post`)
+                //포스트 아이디 저장
                 dispatch(setPostId(postid))
             }
             else{
                 router.push(`/dashboard/home/post`)
+                //포스트 아이디 저장
                 dispatch(setPostId(postid))
             }
             
         }
+        // 인기포스트 탭 메뉴
         const handlePostTab= (tab:any)=>{
             setDatePostMenu(tab)
             setPageParam(0)
             refetch();  
+        }
+        //프로필 라우터
+        const onHandleProfile=(nickanme:any)=>{
+            router.push(`/${nickanme}/dashboard/profile`)
+            //닉네임 저장
+            dispatch(setNickname(nickanme))
+
         }
     return(
         <div className={styles.leftSection}>
@@ -134,12 +145,12 @@ export default function LeftSection(){
                 <div className={styles.wrapperContainer}>
                 {bestPost?.pages.map((group,index)=>(
                         group.map((value)=>(
-                    <div key={index}className={styles.wrapper} onClick={()=>onHandlePost(value.postId)}>
+                    <div key={index}className={styles.wrapper} >
                                <div className={styles.previewHeader}>
-                                    <div className={styles.profileCircle}>
+                                    <div className={styles.profileCircle} onClick={()=>onHandleProfile(value.nickname)}>
                                         <Image src={profileImg} alt="profileImg"></Image>
                                     </div>
-                                    <div className={styles.postBy}> <span>post</span> <b>{value.nickname}</b></div> 
+                                    <div className={styles.postBy} onClick={()=>onHandleProfile(value.nickname)}> <span>post</span> <b>{value.nickname}</b></div> 
                                     <span className={styles.likesCount}>{value.likeCount}</span>
                                     <div className={styles.likes}><Image src={likesIcon} alt="like"></Image></div>
                             </div>
@@ -149,7 +160,7 @@ export default function LeftSection(){
                             <div className={styles.card}>
                                 <h3>{value.title}</h3>
                                 <div className={styles.tags}>
-                                   {value.tags.map((value,index)=>(
+                                   {value.tags?.map((value,index)=>(
                                        <span key={index}>{value}</span>
                                    ))}
                                     

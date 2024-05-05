@@ -27,6 +27,7 @@
   import CustomTextNode from "./customNodes/customTextNodes";
   import axios from "axios";
   import { useDispatch, useSelector } from "react-redux";
+  import TreeSearch from "./treesearch";
  
   const initialNodes = [];
   const initialEdges = [];
@@ -38,9 +39,12 @@
   export default function Home() {
     const nodeText = useSelector((state) => state.nodeData.nodes);
     const canvasId=useSelector((state)=>state.tree.canvasId)
-    const key=useSelector((state)=>state.tree.key)+1
+    const postValue=useSelector((state)=>state.postValue.value)
+    const key=useSelector((state)=>state.tree.key)
+    const accessToken=localStorage.getItem("accestoken")
     const [nodes, setNodes] = useNodesState(initialNodes);
     const [edges, setEdges] = useEdgesState(initialEdges);
+    const [isSearchbar, setIsSearchBar]=useState(false)
     const [text,setText]=useState("")
     const wrapperRef = useRef(null);
     const handleSelectedNodeId = (nodeId) => {
@@ -52,7 +56,7 @@
     const fetchBoxes = async () => {
       try {
         const response = await axios.get(
-          `https://weblog-project.s3.ap-northeast-2.amazonaws.com/knowledgeTree/${key}.json`,
+          `https://weblog-project.s3.ap-northeast-2.amazonaws.com/knowledgeTree/${key}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -97,33 +101,6 @@
     useEffect(() => {
       typeText();
     }, [nodeText]);
-    async function onHandleBestPostPreview({ pageParam }) {
-      // try {
-      //   const response = await api.get(
-      //     `/api/v1/posts/ranks?type=WEEKLY&offset=0&limit=12`,
-      //     {
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //     }
-      //   );
-      //   return response.data;
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      try {
-        const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${0}&limit=12`)
-        console.log(response.data)
-        return response.data.slicedData
-    } catch (error) {
-        console.error(error)
-    }
-    }
-    //리액트쿼리를 이용한 데이터 헨들 무한스크롤
-    const { data: bestPost } = useQuery({
-      queryKey: "bestPost",
-      queryFn: onHandleBestPostPreview,
-    });
     const onNodesChange = useCallback(
       (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
       [setNodes]
@@ -145,12 +122,16 @@
       setEdges((prevEdges) => [...prevEdges, newEdge]);
     };
 
-    const handleWrapperClick = (postId, title, count, image, nickname) => {
+    const handleWrapperClick = () => {
       const id = (nodes.length + 1).toString();
+      const postId=postValue.postId
+      const title=postValue.title
+      const nickname=postValue.nickname
+      const tags=postValue.tags
       const newNode = {
         id,
         type: "custom",
-        data: { postId, title, count, image, nickname }, // wrapper 내용으로 노드 label 설정
+        data: { postId, title,tags, nickname }, // wrapper 내용으로 노드 label 설정
         position: {
           x: 100,
           y:100,
@@ -158,6 +139,9 @@
       };
       setNodes((prevNodes) => [...prevNodes, newNode]);
     };
+    useEffect(()=>{
+      handleWrapperClick()
+    },[postValue])
 
     const handleText = () => {
       const id = (nodes.length + 1).toString();
@@ -189,7 +173,18 @@
           },
         });
     
-        console.log(response2.data); // 두 번째 단계 응답 확인
+        console.log(response2.data.fileName); // 두 번째 단계 응답 확인
+        const body={
+          title:"광열의 로드맵",
+          key:response2.data.fileName
+        }
+        const response3=await api.put(`/api/v1/canvases/${canvasId}`,body,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+          },
+        })
+        console.log(response3.data)
     
       } catch (error) {
         console.error('Error uploading boxes data:', error);
@@ -207,55 +202,7 @@
           </button>
         </div>
 
-        <div className={styles.searchContainer}>
-          <div className={styles.wrapperContainer}>
-            {bestPost &&
-              bestPost.map((value, index) => (
-                <div
-                  key={index}
-                  className={styles.wrapper}
-                  ref={wrapperRef}
-                  onClick={() =>
-                    handleWrapperClick(
-                      value.postId,
-                      value.title,
-                      value.likeCount,
-                      value.imageUrl,
-                      value.nickname
-                    )
-                  }
-                >
-                  <div className={styles.previewHeader}>
-                    <div className={styles.profileCircle}>
-                      <Image src={profileImg} alt="profileImg"></Image>
-                    </div>
-                    <div className={styles.postBy}>
-                      {" "}
-                      <span>post</span> <b>{value.nickname}</b>
-                    </div>
-                    <span className={styles.likesCount}>{value.likeCount}</span>
-                    <div className={styles.likes}>
-                      <Image src={likesIcon} alt="like"></Image>
-                    </div>
-                  </div>
-                  <div className={styles.previewBox}>
-                    <img src={value.imageUrl} alt="previewImg"></img>
-                  </div>
-                  <div className={styles.card}>
-                    <h3>{value.title}</h3>
-                    <div className={styles.tags}>
-                      {value.tags.map((value, index) => (
-                        <span key={index}>{value}</span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                </div>
-              ))}
-              
-          </div>
-          
-        </div>
+        
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -269,6 +216,8 @@
           <Controls />
           <MiniMap />
         </ReactFlow>
+          <TreeSearch setIsSearchbar={setIsSearchBar}/>
+        
       </div>
     );
   }
