@@ -1,91 +1,42 @@
-.board{
-
+.board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+    gap: 20px;
+    padding: 20px;
     box-sizing: border-box;
-    width: 500px;
+    width: 100%;
     height: 75vh;
     border: 1px solid #DFDFDF;
     border-radius: 20px;
     overflow-y: scroll;
-    
-    }
-    .board1{
-        display: flex;
+  }
+  
+  .board-item {
+    position: relative;
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-    gap: 30px;
-    }
-    .board1 :nth-child(1){
-    width: 272px;
-    height: 306px;
-    
-    background: linear-gradient(180deg, #C8DCFD 0%, #CFDFFC 30.5%, #D5E3FB 65.5%, #DDE7FA 98.5%);
-    border-radius: 20px;
-    
-    }
-    .board :nth-child(2){
-    width: 272px;
-    height: 306px;
-    
-    background: linear-gradient(180deg, #D1CBFD 0%, #D5CEFD 30.5%, #DAD4FB 65.5%, #E3DEFA 98.5%);
-    border-radius: 20px;
-    
-        
-        }
-    .board :nth-child(3){
-    width: 272px;
-    height: 194px;
-    
-    background: linear-gradient(180deg, #FDE3CA 0%, #FDE5CE 30.5%, #FEEBD9 65.5%, #FEEDDD 98.5%);
-    border-radius: 20px;
-    
-            
-                
-    }
-    .board :nth-child(4){
-    width: 272px;
-    height: 194px;
-    
-    background: linear-gradient(180deg, #C3F0FB 0%, #C9F1FA 30.5%, #D4F3F9 65.5%, #D9F4F9 98.5%);
-    border-radius: 20px;
-    
-                
-                    
-    }
-    .board :nth-child(5){
-        width: 272px;
-        height: 306px;
-        
-        background: linear-gradient(180deg, #C8DCFD 0%, #CFDFFC 30.5%, #D5E3FB 65.5%, #DDE7FA 98.5%);
-        border-radius: 20px;
-        
-        }
-        .board :nth-child(6){
-        width: 272px;
-        height: 306px;
-        
-        background: linear-gradient(180deg, #D1CBFD 0%, #D5CEFD 30.5%, #DAD4FB 65.5%, #E3DEFA 98.5%);
-        border-radius: 20px;
-        
-            
-            }
-        .board :nth-child(7){
-        width: 272px;
-        height: 194px;
-        
-        background: linear-gradient(180deg, #FDE3CA 0%, #FDE5CE 30.5%, #FEEBD9 65.5%, #FEEDDD 98.5%);
-        border-radius: 20px;
-        
-                
-                    
-        }
-        .board :nth-child(){
-        width: 272px;
-        height: 194px;
-        
-        background: linear-gradient(180deg, #C3F0FB 0%, #C9F1FA 30.5%, #D4F3F9 65.5%, #D9F4F9 98.5%);
-        border-radius: 20px;
-        
-                    
-                        
-        }
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 10%;
+    transition: transform 0.2s ease;
+  }
+  
+  .board-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .nickname {
+    font-size: 14px;
+    color: #666;
+  }

@@ -25,6 +25,7 @@ type Post ={
     imageUrl: string;
     createdDate: string;
     modifiedDate: string;
+    profileImageUrl:string;
 }
 export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
@@ -39,7 +40,7 @@ export default function LeftSection(){
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
             try {
-                const response = await api.get(`/api/v1/posts/ranks?type=${datePostMenu}&offset=${page}&limit=12`,{
+                const response = await api.get(`/api/v2/posts/ranks?type=${datePostMenu}&offset=${page}&limit=12`,{
                     headers:{
                         "Content-Type":"application/json",
 
@@ -88,10 +89,14 @@ export default function LeftSection(){
             }
         }, [inView, isFetching, hasNextPage, fetchNextPage]);
         //포스트 라우터
-        const onHandlePost =(postid:number)=>{
+        const onHandlePost =(postid:number, postnickname:string)=>{
             console.log(postid)
             if(isLogin){
-                router.push(`/${nickname}/dashboard/home/post`)
+                if(nickname==postnickname){
+                    router.push(`/${nickname}/dashboard/home/mypost`)
+                }
+                else{
+                router.push(`/${nickname}/dashboard/home/post`)}
                 //포스트 아이디 저장
                 dispatch(setPostId(postid))
             }
@@ -148,13 +153,13 @@ export default function LeftSection(){
                     <div key={index}className={styles.wrapper} >
                                <div className={styles.previewHeader}>
                                     <div className={styles.profileCircle} onClick={()=>onHandleProfile(value.nickname)}>
-                                        <Image src={profileImg} alt="profileImg"></Image>
+                                        <img src={value?.profileImageUrl} alt="profileImg"></img>
                                     </div>
                                     <div className={styles.postBy} onClick={()=>onHandleProfile(value.nickname)}> <span>post</span> <b>{value.nickname}</b></div> 
                                     <span className={styles.likesCount}>{value.likeCount}</span>
                                     <div className={styles.likes}><Image src={likesIcon} alt="like"></Image></div>
                             </div>
-                            <div  className={styles.previewBox}>
+                            <div  className={styles.previewBox} onClick={()=>onHandlePost(value.postId, value.nickname)} >
                                 <img src={value.imageUrl} alt="previewImg"></img>
                             </div>
                             <div className={styles.card}>
