@@ -67,6 +67,7 @@ export default function ProfileLeftSection (){
     const router=useRouter()
     const [follwerView, setFollowerView]=useState(false)
     const [follwingView, setFollowingView]=useState(false)
+    const [followedBtn, setFollowedBtn]=useState(false)
     const nickname=useSelector((state:RootState)=>state.profile.nickname)
     console.log(nickname)
     const accessToken=localStorage.getItem("accestoken")
@@ -85,7 +86,7 @@ export default function ProfileLeftSection (){
       // }
   
       try{
-        const response =await api.get(`/api/v2/posts/users/${nickname}?&offset=${0}&limit=12`, {
+        const response =await api.get(`/api/v2/posts/users/${nickname}?offset=${0}&limit=12`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`
@@ -107,6 +108,7 @@ export default function ProfileLeftSection (){
           }
         })
         console.log(response.data)
+        setFollowedBtn(response.data.followed)
         return response.data
       }
       catch(error){
@@ -144,7 +146,7 @@ export default function ProfileLeftSection (){
           const repsonse= await api.get(`/api/v1/follows/${nickname}/follower`,{
               headers:{
                   "Content-Type":"application/json",
-                  Authorization: `Bearer ${accessToken}`,
+                  Authorization: `Bearer ${accessToken}`
               }
           })
           console.log(repsonse.data)
@@ -160,7 +162,7 @@ export default function ProfileLeftSection (){
           const response = await api.get(`/api/v1/follows/${nickname}/following`,{
               headers:{
                   "Content-Type":"application/json",
-                  Authorization: `Bearer ${accessToken}`,
+                  Authorization: `Bearer ${accessToken}`
               }
           })
           console.log(response.data)
@@ -210,8 +212,30 @@ export default function ProfileLeftSection (){
         })
         console.log(response.data)
       }
-      catch{
-
+      catch(error){
+        console.error(error)
+      }
+    }
+    const deleteFollow = async ()=>{
+      try{
+        const response=await api.delete("/api/v1/follows/following",{
+          data:{
+            nickname:nickname
+          },
+          headers:{
+            "Content-Type":"application/json",
+            Authorization: `Bearer ${accessToken}`,
+        }
+        })
+        
+        console.log(response.data)
+        if(response.status=200){
+          window.location.reload()
+        }
+       
+      }
+      catch(error){
+        console.error(error)
       }
     }
     return(
@@ -224,7 +248,7 @@ export default function ProfileLeftSection (){
                         <span>{profileData?.nickname}</span>
                         <span>{profileData?.email}</span>
                     </div>
-                    <button onClick={addFollow}>팔로우</button>
+                    {followedBtn ? (<button onClick={deleteFollow}>팔로잉</button>):<button onClick={addFollow}>팔로우</button>}
                     <div className={styles.followers}>
                         <div>
                             <span>999</span>

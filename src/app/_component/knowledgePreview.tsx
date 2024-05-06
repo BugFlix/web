@@ -80,8 +80,8 @@ export default function knowledgePreview() {
           </div>
         </div>
         <div className={styles.boardLayout}>
+        <Recent />
           <Mine />
-          <Recent />
         </div>
       </div>
       {isSearchbar ? <CanvasSearch setIsSearchbar={setIsSearchbar} /> : null}
