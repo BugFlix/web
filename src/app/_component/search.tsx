@@ -170,7 +170,7 @@ useEffect(() => {
             <div ref={searchRef} className={styles.searchContainer}>
                 <div className={styles.searchBar}>
                     <select className={styles.select} id="searchTypeSelect">
-                        <option value="default">제목+테그</option>
+                        <option value="default">제목+태그</option>
                         <option value="paragraph">제목</option>
                         <option value="tag">태그</option>
                     </select>

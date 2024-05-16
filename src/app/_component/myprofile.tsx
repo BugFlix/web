@@ -63,7 +63,7 @@ export default function MyComponentProfile(){
                 const body1={
                     nickname:nickname,
                     imageUrl:response.data.fileUrl,
-                    phoneNumber:"01076549532"
+                    phoneNumber:""
                 }
                 const response2=await api.put("/api/v1/profile",body1,{
                     headers:{

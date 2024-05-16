@@ -38,26 +38,18 @@ export default function LeftSection(){
     }
     const router=useRouter()
         //인기포스트 요청
-        async function onHandleBestPostPreview({ pageParam }: { pageParam?: number }) {
+        async function onHandleBestPostPreview({ pageParam, datePostMenu }: { pageParam?: number; datePostMenu: string }) {
             try {
-                const response = await api.get(`/api/v2/posts/ranks?type=${datePostMenu}&offset=${page}&limit=12`,{
-                    headers:{
-                        "Content-Type":"application/json",
-
-                    }
-                })
-                console.log(response.data)
-                return response.data
+                const response = await api.get(`/api/v2/posts/ranks?type=${datePostMenu}&offset=${pageParam}&limit=12`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                console.log(response.data);
+                return response.data;
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
-            // try {
-            //     const response = await axios.get(`http://localhost:8000/api/v1/posts/ranks?type=weekly&number=20&offset=${pageParam}&limit=12`)
-            //     console.log(response.data)
-            //     return response.data.slicedData
-            // } catch (error) {
-            //     console.error(error)
-            // }
         }
         //리액트쿼리를 이용한 데이터 헨들 무한스크롤
         const {
@@ -69,12 +61,14 @@ export default function LeftSection(){
             fetchNextPage,
             hasNextPage,
             isFetching
-        } = useInfiniteQuery<Post[], object, InfiniteData<Post[]>, [_1: string], number>({
-            queryKey: ["bestPostPreview"],
-            queryFn: onHandleBestPostPreview,
+        } = useInfiniteQuery<Post[], object, InfiniteData<Post[]>, [string], number>({
+            queryKey: ["bestPostPreview"], // datePostMenu를 "bestPostPreview"와 연결
+            queryFn: ({ pageParam }) => onHandleBestPostPreview({ pageParam, datePostMenu }),
             initialPageParam: 0,
-            getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.postId, // Adjusted this line
+            getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.postId,
         });
+        
+
     
         //스클롤 감지 하단으로 가면 다음 요청 보내기
         const {ref,inView}=useInView({
@@ -108,11 +102,14 @@ export default function LeftSection(){
             
         }
         // 인기포스트 탭 메뉴
-        const handlePostTab= (tab:any)=>{
-            setDatePostMenu(tab)
-            setPageParam(0)
-            refetch();  
-        }
+        const handlePostTab = (tab: string) => {
+            console.log("Tab clicked:", tab);
+            setDatePostMenu(tab);
+            setPageParam(0);
+            console.log("Page param set to 0");
+            refetch();
+            console.log("Refetch called");
+        };
         //프로필 라우터
         const onHandleProfile=(nickanme:any)=>{
             router.push(`/${nickanme}/dashboard/profile`)

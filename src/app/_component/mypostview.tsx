@@ -214,7 +214,6 @@ export default function MyPost(){
     }
     return(
         <div className={styles.postBackground} ref={postRef}>
-          마이포스트
                 <div className={styles.buttons}>
                   <button className={styles.closeBtn} onClick={onHandleClose}></button>
                   <button className={styles.fullScreenBtn} onClick={onHandleFullSize}></button>
@@ -253,8 +252,8 @@ export default function MyPost(){
                     <div className={styles.postBox} dangerouslySetInnerHTML={{__html: dataPostDetail?.memo}} ></div>
                   </div>
                   </div>
-                  <div ref={deleteRef} className={styles.deleteButton}>삭제</div>
-                <div ref={footerRef}className={styles.footer} onClick={handleDeletePost}>
+                  <div onClick={handleDeletePost} ref={deleteRef} className={styles.deleteButton}>삭제</div>
+                <div ref={footerRef}className={styles.footer} >
                   <Comment />
                 </div>
         </div>

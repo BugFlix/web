@@ -68,8 +68,8 @@ export default function ProfileLeftSection (){
     const [follwerView, setFollowerView]=useState(false)
     const [follwingView, setFollowingView]=useState(false)
     const [followedBtn, setFollowedBtn]=useState(false)
-    const nickname=useSelector((state:RootState)=>state.profile.nickname)
-    console.log(nickname)
+    const reduxnickname=useSelector((state:RootState)=>state.profile.nickname)
+    const [nickname, setNickname]=useState<any>(reduxnickname|| localStorage.getItem("profilename"))
     const accessToken=localStorage.getItem("accestoken")
     async function onHandleMyPostPreview({ pageParam }: { pageParam?: number }) {
       // try {
@@ -238,6 +238,10 @@ export default function ProfileLeftSection (){
         console.error(error)
       }
     }
+    useEffect(()=>{
+      localStorage.setItem("profilename",nickname)
+    },[nickname])
+    console.log(dataPost)
     return(
         <div className={styles.innerView}>
             <div className={styles.myProfile}>
@@ -251,7 +255,7 @@ export default function ProfileLeftSection (){
                     {followedBtn ? (<button onClick={deleteFollow}>팔로잉</button>):<button onClick={addFollow}>팔로우</button>}
                     <div className={styles.followers}>
                         <div>
-                            <span>999</span>
+                            <span>{}</span>
                             <span>포스트</span>
                         </div>
                         <div onClick={onHandleFollowerView}>
@@ -279,7 +283,7 @@ export default function ProfileLeftSection (){
                     <div key={index}className={styles.wrapper} onClick={()=>onHandlePost(value.postId)}>
                                <div className={styles.previewHeader}>
                                     <div className={styles.profileCircle}>
-                                        <Image src={profileImg} alt="profileImg"></Image>
+                                        <img src={profileData?.imageUrl} alt="profileImg"></img>
                                     </div>
                                     <div className={styles.postBy}> <span>post</span> <b>{value.nickname}</b></div> 
                                     <span className={styles.likesCount}>{value.likeCount}</span>
@@ -315,7 +319,9 @@ export default function ProfileLeftSection (){
                 {followers?.map((value:any,index:any)=>(
                   <div className={styles.follwerList}>
                   <div key={index} className={styles.followerListWrapper}>
-                    <div className={styles.followerCircle}></div>
+                    <div className={styles.followerCircle}>
+                      <img src={value?.profileImageUrl}></img>
+                    </div>
                     <span>{value.nickname}</span>
                     <button>팔로잉</button>
                   </div>
@@ -332,7 +338,9 @@ export default function ProfileLeftSection (){
                 {following?.map((value:any,index:any)=>(
                   <div className={styles.follwerList}>
                   <div key={index} className={styles.followerListWrapper}>
-                    <div className={styles.followerCircle}></div>
+                    <div className={styles.followerCircle}>
+                      <img src={value?.profileImageUrl}></img>
+                    </div>
                     <span>{value.nickname}</span>
                     <button>팔로잉</button>
                   </div>

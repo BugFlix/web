@@ -32,18 +32,18 @@ const CustomNode = ({ data }) => {
       ></Handle>
       <div className={styles.previewHeader}>
         <div className={styles.profileCircle}>
-          <Image src={profileImg} alt="profileImg" />
+          <img src={data.profileImg} alt="profileImg" />
         </div>
         <div className={styles.postBy}>
           <span>post</span> <b>{data.nickname}</b>
         </div>
-        <span className={styles.likesCount}>{data.count}</span>
+        <span className={styles.likesCount}>{data.likeCount}</span>
         <div className={styles.likes}>
           <Image src={likesIcon} alt="like" />
         </div>
       </div>
       <div className={styles.previewBox}>
-        <img src={data.image} alt="previewImg" />
+        <img src={data.imageUrl} alt="previewImg" />
       </div>
       <div className={styles.card}>
         <h3>{data.title}</h3>

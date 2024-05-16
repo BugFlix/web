@@ -69,6 +69,26 @@ export default function MyLeftSection (){
     const [follwingView, setFollowingView]=useState(false)
   
     const accessToken=localStorage.getItem("accestoken")
+    async function onHandleProfileData(){
+      try{
+        const response = await api.get(`/api/v1/profiles/mine`,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        console.log(response.data)
+        return response.data
+      }
+      catch(error){
+        console.error(error)
+      }
+    }
+
+    const {data: profileData}=useQuery<any>({
+      queryKey:["profileData"],
+      queryFn: onHandleProfileData
+    })
     async function onHandleMyPostPreview({ pageParam }: { pageParam?: number }) {
       // try {
       //   const response = await api.get(`/api/v1/posts/mine?url=${encodeUrl}`, {
@@ -207,10 +227,10 @@ export default function MyLeftSection (){
         <div className={styles.innerView}>
             <div className={styles.myProfile}>
                 <div className={styles.header}>
-                    <Image src={profileImg} alt=""/>
+                    <img src={profileData?.imageUrl} alt=""/>
                     <div className={styles.profile}>
                         <span>{nickname}</span>
-                        <span>sgky0511@naver.com</span>
+                        <span>{profileData?.email}</span>
                     </div>
                     <div className={styles.followers}>
                         <div>
@@ -242,7 +262,7 @@ export default function MyLeftSection (){
                     <div key={index}className={styles.wrapper} onClick={()=>onHandlePost(value.postId)}>
                                <div className={styles.previewHeader}>
                                     <div className={styles.profileCircle}>
-                                        <Image src={profileImg} alt="profileImg"></Image>
+                                        <img src={profileData?.imageUrl} alt="profileImg"></img>
                                     </div>
                                     <div className={styles.postBy}> <span>post</span> <b>{value.nickname}</b></div> 
                                     <span className={styles.likesCount}>{value.likeCount}</span>
@@ -278,7 +298,9 @@ export default function MyLeftSection (){
                 {followers?.map((value:any,index:any)=>(
                   <div className={styles.follwerList}>
                   <div key={index} className={styles.followerListWrapper}>
-                    <div className={styles.followerCircle}></div>
+                    <div className={styles.followerCircle}>
+                      <img src={value?.profileImageUrl}></img>
+                    </div>
                     <span>{value.nickname}</span>
                     <button onClick={()=>onHandleDeleteFollowing(value?.nickname)}>팔로잉</button>
                   </div>
@@ -295,7 +317,9 @@ export default function MyLeftSection (){
                 {following?.map((value:any,index:any)=>(
                   <div className={styles.follwerList}>
                   <div key={index} className={styles.followerListWrapper}>
-                    <div className={styles.followerCircle}></div>
+                    <div className={styles.followerCircle}>
+                      <img src={value?.profileImageUrl}></img>
+                    </div>
                     <span>{value.nickname}</span>
                     <button onClick={()=>{onHandleDeleteFollowing(value?.nickname)}}>팔로잉</button>
                   </div>
