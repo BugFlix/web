@@ -30,8 +30,22 @@ export default function TreeSearch({ setIsSearchbar }: SearchProps){
         setSearch(e.target.value)
     }
     const autoCompleteSearch=Debounce(search,500);
-    const returnPost = (value:any)=>{
-      dispatch(setPostValue(value))
+    const returnPost = async(postId:any)=>{
+      try{
+        const response= await api.get(`/api/v2/posts/${postId}/preview`,{
+          headers:{
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        console.log(response.data)
+        dispatch(setPostValue(response.data))
+      }
+      catch(error){
+        console.error(error)
+      }
+
+     
     }
  
     const onHandleAutoComplete=async ()=>{
@@ -123,7 +137,7 @@ export default function TreeSearch({ setIsSearchbar }: SearchProps){
               <div
                 key={item}
                 className={styles.autoCompleteItem}
-                onClick={()=>returnPost(value)}
+                onClick={()=>returnPost(value.postId)}
               >
                 {value.title}
              

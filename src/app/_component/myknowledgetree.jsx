@@ -128,10 +128,13 @@
       const title=postValue.title
       const nickname=postValue.nickname
       const tags=postValue.tags
+      const imageUrl=postValue.imageUrl
+      const likeCount=postValue.likeCount
+      const profileImg=postValue.profileImageUrl
       const newNode = {
         id,
         type: "custom",
-        data: { postId, title,tags, nickname }, // wrapper 내용으로 노드 label 설정
+        data: { postId, title,tags, nickname,imageUrl,likeCount,profileImg }, // wrapper 내용으로 노드 label 설정
         position: {
           x: 100,
           y:100,

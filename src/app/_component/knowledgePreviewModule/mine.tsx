@@ -20,7 +20,7 @@ export default function Mine() {
   const router=useRouter()
   const dispatch=useDispatch()
   let [page,setPageParam]=useState(0)
-  const onHandleknowledgeTreePreview=async()=>{
+  const onHandleMyKnowledgeTreePreview=async()=>{
     try{
       const response=await api.get(`/api/v1/canvases/mine?offset=${page}&limit=12`,{
         headers:{
@@ -37,7 +37,7 @@ export default function Mine() {
     }
   }
   const {
-    data: bestPost,
+    data: bestDataPost,
     isLoading,
     isError,
     isSuccess,
@@ -47,7 +47,7 @@ export default function Mine() {
     isFetching
 } = useInfiniteQuery<Tree[], object, InfiniteData<Tree[]>, [_1: string], number>({
     queryKey: ["bestPostPreview"],
-    queryFn: onHandleknowledgeTreePreview,
+    queryFn: onHandleMyKnowledgeTreePreview,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.canvasId, // Adjusted this line
 });
@@ -107,7 +107,7 @@ const onDeleteTree=async (canvasId:any)=>{
    <div>
     <h3>마이 캠버스</h3>
      <div className={styles.board}>
-     {bestPost?.pages.map((group, index) => (
+     {bestDataPost?.pages.map((group, index) => (
           group.map((value, idx) => (
             <div key={index * 100 + idx} className={styles['board-item']} style={{ background: `linear-gradient(180deg, ${getRandomGradient()})` }}>
             <div className={styles['content']} onClick={() => onHandleTree(value.canvasId, value.key, value.nickname)}>

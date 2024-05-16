@@ -30,7 +30,7 @@ export default function Recent() {
       const response=await api.get(`/api/v1/canvases?offset=${page}&limit=12`,{
         headers:{
           "Content-Type":"application/json",
-          Authorization: `Bearer ${accessToken}`
+
 
         }
       })

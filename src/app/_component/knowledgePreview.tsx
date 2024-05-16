@@ -3,12 +3,13 @@ import Image from "next/image";
 import styles from "./knowledgePreview.module.css";
 import searchIcon from "@/asset/images/main/search.png";
 import { useState, useEffect } from "react";
-import Recent from "./knowledgePreviewModule/recent";
-import Mine from "./knowledgePreviewModule/mine";
+
 import CanvasSearch from "./canvassearch";
 import axios from "axios";
 import followClose from "@/asset/images/followclose.png"
 import api from "../config/apiConfig";
+import Mine from "./knowledgePreviewModule/mine"
+import Recent from "./knowledgePreviewModule/recent";
 export default function knowledgePreview() {
   const accessToken=localStorage.getItem("accestoken")
   const [divCount, setDivCount] = useState(0);
@@ -76,12 +77,17 @@ export default function knowledgePreview() {
           <button onClick={handleAddOpen}>추가</button>
           <div className={styles.searchBar} onClick={handleSearchBar}>
             <Image src={searchIcon} alt="search"></Image>
-            <span>포스트 검색...</span>
+            <span>캔버스 검색...</span>
           </div>
         </div>
         <div className={styles.boardLayout}>
-        <Recent />
-          <Mine />
+        <div className={styles.column}>
+            <Recent />
+          </div>
+          <div className={styles.column}>
+            <Mine />
+          </div>
+
         </div>
       </div>
       {isSearchbar ? <CanvasSearch setIsSearchbar={setIsSearchbar} /> : null}
