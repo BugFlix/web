@@ -69,6 +69,7 @@ export default function knowledgePreview() {
       console.error(error)
     }
   }
+  
 
   return (
     <div className={styles.background}>

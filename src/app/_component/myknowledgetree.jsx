@@ -38,9 +38,15 @@
 
   export default function Myknowledgetree() {
     const nodeText = useSelector((state) => state.nodeData.nodes);
-    const canvasId=useSelector((state)=>state.tree.canvasId)
-    const postValue=useSelector((state)=>state.postValue.value)
-    const key=useSelector((state)=>state.tree.key)
+    const reduxCanvasId=useSelector((state)=>state.tree.canvasId)
+    const reduxPostValue=useSelector((state)=>state.postValue.value)
+    const reduxKey=useSelector((state)=>state.tree.key)
+    const reduxCanvasTitle=useSelector((state)=>state.tree.title)
+    const [canvasId]=useState(reduxCanvasId||localStorage.getItem("canvascanvasId"))
+    const [postValue]=useState(reduxPostValue||localStorage.getItem("postpostValue"))
+    const [key]=useState(reduxKey||localStorage.getItem("keykey"))
+    const [canvasTitle]=useState(reduxCanvasTitle||localStorage.getItem("canvascanvasTitle"))
+
     const accessToken=localStorage.getItem("accestoken")
     const [nodes, setNodes] = useNodesState(initialNodes);
     const [edges, setEdges] = useEdgesState(initialEdges);
@@ -178,7 +184,7 @@
     
         console.log(response2.data.fileName); // 두 번째 단계 응답 확인
         const body={
-          title:"광열의 로드맵",
+          title:canvasTitle,
           key:response2.data.fileName
         }
         const response3=await api.put(`/api/v1/canvases/${canvasId}`,body,{
@@ -193,6 +199,12 @@
         console.error('Error uploading boxes data:', error);
       }
     };
+    useEffect(()=>{
+      localStorage.setItem("canvascanvasId",canvasId)
+      localStorage.setItem("postpostValue",postValue)
+      localStorage.setItem("keykey",key)
+      localStorage.setItem("canvascanvasTitle",canvasTitle)
+    },[canvasId,postValue,key,canvasTitle])
     return (
       <div className={styles.background}>
         
