@@ -6,13 +6,14 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import api from "../config/apiConfig"
 import { useDispatch } from "react-redux"
-import { setPostId } from "@/app/slices/postSlice"
 import { useRouter } from "next/navigation"
 import { AuthContext } from "@/app/_component/Provider/authProvider"
+import { setCanvasId, setKey, setTitle } from "../slices/treeNumber"
 type Value={
     canvasId:number
     title:string
     nickname:string
+    key:string
 }
 type SearchProps = {
   setIsSearchbar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -106,18 +107,18 @@ export default function CanvasSearch({ setIsSearchbar }: SearchProps){
         }
       };
       
-      const onHandlePost =(postid:number)=>{
-        console.log(postid)
-        if(isLogin){
-            router.push(`/${nickname}/dashboard/knowledgetree/view`)
-            dispatch(setPostId(postid))
-            setIsSearchbar(false)
+      const onHandlePost =(canvasId:number,title:string,treenickname:string,key:string)=>{
+
+        if(treenickname==nickname){
+          router.push("knowledgetree/myview")
         }
         else{
-            router.push(`/dashboard/knowledgetree`)
-            dispatch(setPostId(postid))
-            setIsSearchbar(false)
+          router.push("knowledgetree/view")
         }
+       
+        dispatch(setCanvasId(canvasId))
+        dispatch(setKey(key))
+        dispatch(setTitle(title))
         
     }
     const setExitBtn =()=>{
@@ -169,7 +170,7 @@ useEffect(() => {
                 className={styles.autoCompleteItem}
                 onMouseOver={()=>onHandleSearchItemView(value)}
                 onMouseOut={onHandleSearchItemOut}
-                onClick={()=>onHandlePost(value.canvasId)}
+                onClick={()=>onHandlePost(value.canvasId,value.title,value.nickname,value.key)}
               >
                 {value.title}
              

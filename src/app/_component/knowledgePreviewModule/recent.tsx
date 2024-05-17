@@ -6,7 +6,7 @@ import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import api from "../../config/apiConfig";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setCanvasId } from "@/app/slices/treeNumber";
+import { setCanvasId, setTitle } from "@/app/slices/treeNumber";
 import { setKey } from "@/app/slices/treeNumber";
 import { AuthContext } from "../Provider/authProvider";
 
@@ -51,7 +51,7 @@ export default function Recent() {
     hasNextPage,
     isFetching
 } = useInfiniteQuery<Tree[], object, InfiniteData<Tree[]>, [_1: string], number>({
-    queryKey: ["bestPostPreview"],
+    queryKey: ["bestCanvasPostPreview"],
     queryFn: onHandleknowledgeTreePreview,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.canvasId, // Adjusted this line
@@ -71,7 +71,7 @@ useEffect(()=>{
 
 },[inView,isFetching,hasNextPage,fetchNextPage])
 
-const onHandleTree=async(canvasId:number,key:string, treenickname:string)=>{
+const onHandleTree=async(canvasId:number,key:string, treenickname:string, title:string)=>{
   console.log(canvasId, key)
   try{
     if(treenickname==nickname){
@@ -83,6 +83,7 @@ const onHandleTree=async(canvasId:number,key:string, treenickname:string)=>{
    
     dispatch(setCanvasId(canvasId))
     dispatch(setKey(key))
+    dispatch(setTitle(title))
   }catch(error){
     console.error(error)
   }
@@ -104,7 +105,7 @@ const getRandomGradient = () => {
   {bestPost?.pages.map((group, index) => (
     group.map((value, idx) => (
       <div key={index * 100 + idx} className={styles['board-item']} style={{ background: `linear-gradient(180deg, ${getRandomGradient()})` }}>
-      <div className={styles['content']} onClick={() => onHandleTree(value.canvasId, value.key, value.nickname)}>
+      <div className={styles['content']} onClick={() => onHandleTree(value.canvasId, value.key, value.nickname, value.title)}>
         <div className={styles['title']}>{value.title}</div>
         <div className={styles['nickname']}>{value.nickname}</div>
       </div>

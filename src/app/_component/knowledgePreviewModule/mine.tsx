@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer"
 import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import api from "../../config/apiConfig";
 import { useRouter } from "next/navigation"
-import { setCanvasId, setKey } from "@/app/slices/treeNumber";
+import { setCanvasId, setKey,setTitle } from "@/app/slices/treeNumber";
 import { useDispatch } from "react-redux";
 
 type Tree ={
@@ -19,10 +19,11 @@ export default function Mine() {
   const accessToken=localStorage.getItem("accestoken")
   const router=useRouter()
   const dispatch=useDispatch()
-  let [page,setPageParam]=useState(0)
+  let [pages,setPagesParam]=useState(0)
+  
   const onHandleMyKnowledgeTreePreview=async()=>{
     try{
-      const response=await api.get(`/api/v1/canvases/mine?offset=${page}&limit=12`,{
+      const response=await api.get(`/api/v1/canvases/mine?offset=${pages}&limit=12`,{
         headers:{
           "Content-Type":"application/json",
           Authorization: `Bearer ${accessToken}`
@@ -46,7 +47,7 @@ export default function Mine() {
     hasNextPage,
     isFetching
 } = useInfiniteQuery<Tree[], object, InfiniteData<Tree[]>, [_1: string], number>({
-    queryKey: ["bestPostPreview"],
+    queryKey: ["bestMyPostPreview"],
     queryFn: onHandleMyKnowledgeTreePreview,
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.slice(-1)?.[0]?.canvasId, // Adjusted this line
@@ -60,13 +61,13 @@ const {ref,inView}=useInView({
 });
 useEffect(()=>{
     if (inView && !isFetching && hasNextPage) {
-      setPageParam(++page)
+      setPagesParam(++pages)
         fetchNextPage();
       }
 
 },[inView,isFetching,hasNextPage,fetchNextPage])
 
-const onHandleTree=async(canvasId:number,key:string, treenickname:string)=>{
+const onHandleTree=async(title:string,canvasId:number,key:string, treenickname:string)=>{
   console.log(canvasId, key)
   try{
       router.push("knowledgetree/myview")
@@ -74,6 +75,7 @@ const onHandleTree=async(canvasId:number,key:string, treenickname:string)=>{
    
     dispatch(setCanvasId(canvasId))
     dispatch(setKey(key))
+    dispatch(setTitle(title))
   }catch(error){
     console.error(error)
   }
@@ -110,7 +112,7 @@ const onDeleteTree=async (canvasId:any)=>{
      {bestDataPost?.pages.map((group, index) => (
           group.map((value, idx) => (
             <div key={index * 100 + idx} className={styles['board-item']} style={{ background: `linear-gradient(180deg, ${getRandomGradient()})` }}>
-            <div className={styles['content']} onClick={() => onHandleTree(value.canvasId, value.key, value.nickname)}>
+            <div className={styles['content']} onClick={() => onHandleTree(value.title,value.canvasId, value.key, value.nickname)}>
               <div className={styles['title']}>{value.title}</div>
               <div className={styles['nickname']}>{value.nickname}</div>
             </div>

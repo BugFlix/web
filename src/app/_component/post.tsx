@@ -62,7 +62,8 @@ interface Post {
   };
 
 export default function Post(){
-  const postId = useSelector((state: RootState) => state.post.postId);
+  const reduxPostId = useSelector((state: RootState) => state.post.postId);
+  const [postId, setPostId]=useState<any>(reduxPostId||localStorage.getItem("postPostId"))
   console.log(postId)
     const accessToken=localStorage.getItem("accestoken")
     const [likeCount, setLikeCount] = useState(0);
@@ -193,7 +194,9 @@ export default function Post(){
             postRef.current.style.transition="0.4s"
         }
     },[])
-
+    useEffect(()=>{
+      localStorage.setItem("postPostId",postId)
+    },[postId])
     return(
         <div className={styles.postBackground} ref={postRef}>
                 <div className={styles.buttons}>
