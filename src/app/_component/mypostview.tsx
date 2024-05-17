@@ -167,7 +167,6 @@ export default function MyPost(){
         scrabRef.current.style.height = isFullSize ? "500px" : "1000px";
         memoRef.current.style.marginTop = isFullSize ? "702px" : "1177.5px";
         footerRef.current.style.top=isFullSize? "1220px":"1700px"
-        deleteRef.current.style.top=isFullSize? "140%":"195%"
           setIsFullSize(!isFullSize);
       }
 
@@ -232,7 +231,8 @@ export default function MyPost(){
                               <div key={index} className={styles.tagsIndex}>
                                 <span className={styles.tagCircle}>{value}</span>
                             </div>
-                        ))}     
+                        ))}
+                         <div onClick={handleDeletePost} ref={deleteRef} className={styles.deleteButton}>삭제</div>     
                     </div>
                     <button className={styles.likeBtn} onClick={()=>onHandleLikeButton(dataPostDetail?.postId)}>
                     <Image src={img} alt="img"></Image>
@@ -256,7 +256,7 @@ export default function MyPost(){
                     <div className={styles.postBox} dangerouslySetInnerHTML={{__html: dataPostDetail?.memo}} ></div>
                   </div>
                   </div>
-                  <div onClick={handleDeletePost} ref={deleteRef} className={styles.deleteButton}>삭제</div>
+                 
                 <div ref={footerRef}className={styles.footer} >
                   <Comment />
                 </div>

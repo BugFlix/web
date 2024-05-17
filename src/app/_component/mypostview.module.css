@@ -179,6 +179,6 @@ box-sizing: border-box;
 }
 .deleteButton{
     position: absolute;
-    right: 10%;
-    top: 140%;
+    right: 7%;
+    top: 10%;
 }
