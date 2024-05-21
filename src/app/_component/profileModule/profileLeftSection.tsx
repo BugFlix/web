@@ -255,7 +255,7 @@ export default function ProfileLeftSection (){
                     {followedBtn ? (<button onClick={deleteFollow}>팔로잉</button>):<button onClick={addFollow}>팔로우</button>}
                     <div className={styles.followers}>
                         <div>
-                            <span>{}</span>
+                            <span>{1}</span>
                             <span>포스트</span>
                         </div>
                         <div onClick={onHandleFollowerView}>

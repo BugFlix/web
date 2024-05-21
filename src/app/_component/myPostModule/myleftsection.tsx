@@ -234,7 +234,7 @@ export default function MyLeftSection (){
                     </div>
                     <div className={styles.followers}>
                         <div>
-                            <span>999</span>
+                            <span>3</span>
                             <span>포스트</span>
                         </div>
                         <div onClick={onHandleFollowerView}>

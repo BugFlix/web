@@ -40,6 +40,7 @@ export default function TreeSearch({ setIsSearchbar }: SearchProps){
         })
         console.log(response.data)
         dispatch(setPostValue(response.data))
+        console.log("hello")
       }
       catch(error){
         console.error(error)
