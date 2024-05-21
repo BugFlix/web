@@ -5,6 +5,7 @@ import profileImg from "../../asset/images/kwang.jpg"
 import api from "../config/apiConfig";
 import { useSelector } from "react-redux"
 import { RootState } from '../reducers/rootReducer';
+import { useQuery } from "@tanstack/react-query";
 
 interface Comment {
   commentId:number
@@ -38,6 +39,27 @@ export default function Comment() {
   const [editCommentIndex, setEditCommentIndex] = useState<number | null>(null);
   const [editReplyIndex, setEditReplyIndex] = useState<number | null>(null);
   const accessToken=localStorage.getItem("accestoken")
+
+  async function onHandleProfile(){
+    try{
+        const response= await api.get("api/v1/profiles/mine",{
+            headers:{
+                "Content-Type":"application/json",
+                Authorization: `Bearer ${accessToken}`,
+            }
+        })
+        console.log(response.data)
+        return response.data;
+    }
+    catch(error){
+        console.error(error)
+    }
+}
+
+const {data:profileData, isLoading, isSuccess, isError}=useQuery<any>({
+    queryKey:["profileCommentKey"],
+    queryFn:onHandleProfile,
+})
   console.log(accessToken)
   useEffect(() => {
     fetchComments();
@@ -199,8 +221,8 @@ export default function Comment() {
     <div className={styles.commentContainer}>
       <div className={styles.commentContent}>
         <div className={styles.commentInput}>
-          <img src={user.profile} alt="Profile" className={styles.profileImage} />
-          <div className={styles.commenterName}>{user.name}</div>
+          <img src={profileData?.imageUrl} alt="Profile" className={styles.profileImage} />
+          <div className={styles.commenterName}>{profileData?.name}</div>
 
           <input
             type="text"
