@@ -15,6 +15,8 @@ import { setNickname } from "@/app/slices/profileSlice"
 import axios from "axios"
 import api from "@/app/config/apiConfig"
 import Search from "../search"
+import { EventSourcePolyfill,NativeEventSource } from "event-source-polyfill"
+
 type Post ={
     postId: number;
     nickname: string;
@@ -26,16 +28,70 @@ type Post ={
     createdDate: string;
     modifiedDate: string;
     profileImageUrl:string;
+
 }
+const Alert = ({alertMessages}:any) => {
+    return (
+        <div className={styles.alertContainer}>
+        {alertMessages.map((value:any,index:any)=>(
+  <div key={index} className={styles.alert}>
+  <p>{value}</p>
+</div>
+        ))}
+      
+        </div>
+    );
+};
 export default function LeftSection(){
     const {isLogin,nickname}=useContext(AuthContext)
+    const accessToken=localStorage.getItem("accestoken")
+    console.log(accessToken)
     const [datePostMenu, setDatePostMenu]=useState("WEEKLY")
     const [isSearchbar,setIsSearchbar]=useState(false)
     let [page,setPageParam]=useState(0)
+    const [alertMessages, setAlertMessages] = useState<string[]>([])
     const dispatch = useDispatch()
     const HandleSearch=()=>{
         setIsSearchbar(true)
     }
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    useEffect(() => {
+        const eventSource = new EventSourcePolyfill('https://apis.scrabler.com/v1/sse/subscribe', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            
+          },
+          heartbeatTimeout:3600000,
+          withCredentials: false,
+        });
+         eventSource.addEventListener("notification", (e:any) => {
+            console.log(e.data);
+            const parsedData = JSON.parse(e.data);
+        const content = parsedData.content;
+        if (content && content !== "connection created") {
+            setAlertMessages((prevMessages) => [...prevMessages, content]);
+        }
+            
+          });
+          
+        eventSource.onmessage = (event) => {
+          console.log(event.data);
+        
+        };
+        return () => {
+          eventSource.close();
+        };
+        
+      }, []);
+      useEffect(() => {
+        if (alertMessages.length > 0) {
+            const timer = setTimeout(() => {
+                setAlertMessages((prevMessages) => prevMessages.slice(1)); // Remove the oldest alert after 5 seconds
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [alertMessages]);
+
     const router=useRouter()
         //인기포스트 요청
         async function onHandleBestPostPreview({ pageParam, datePostMenu }: { pageParam?: number; datePostMenu: string }) {
@@ -177,6 +233,9 @@ export default function LeftSection(){
                 </div>
           
                 {isSearchbar && <Search setIsSearchbar={setIsSearchbar} />}
+                
+                <Alert alertMessages={alertMessages} />
+
             </div>
             
          </div>

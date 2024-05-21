@@ -40,6 +40,7 @@
     const nodeText = useSelector((state) => state.nodeData.nodes);
     const reduxCanvasId=useSelector((state)=>state.tree.canvasId)
     const reduxPostValue=useSelector((state)=>state.postValue.value)
+    console.log(reduxPostValue)
     const reduxKey=useSelector((state)=>state.tree.key)
     const reduxCanvasTitle=useSelector((state)=>state.tree.title)
     const [canvasId]=useState(reduxCanvasId||localStorage.getItem("canvascanvasId"))
@@ -129,14 +130,15 @@
     };
 
     const handleWrapperClick = () => {
+      console.log("click")
       const id = (nodes.length + 1).toString();
-      const postId=postValue.postId
-      const title=postValue.title
-      const nickname=postValue.nickname
-      const tags=postValue.tags
-      const imageUrl=postValue.imageUrl
-      const likeCount=postValue.likeCount
-      const profileImg=postValue.profileImageUrl
+      const postId=reduxPostValue.postId
+      const title=reduxPostValue.title
+      const nickname=reduxPostValue.nickname
+      const tags=reduxPostValue.tags
+      const imageUrl=reduxPostValue.imageUrl
+      const likeCount=reduxPostValue.likeCount
+      const profileImg=reduxPostValue.profileImageUrl
       const newNode = {
         id,
         type: "custom",
@@ -150,7 +152,7 @@
     };
     useEffect(()=>{
       handleWrapperClick()
-    },[postValue])
+    },[reduxPostValue])
 
     const handleText = () => {
       const id = (nodes.length + 1).toString();
@@ -201,10 +203,10 @@
     };
     useEffect(()=>{
       localStorage.setItem("canvascanvasId",canvasId)
-      localStorage.setItem("postpostValue",postValue)
+      localStorage.setItem("postpostValue",reduxPostValue)
       localStorage.setItem("keykey",key)
       localStorage.setItem("canvascanvasTitle",canvasTitle)
-    },[canvasId,postValue,key,canvasTitle])
+    },[canvasId,reduxPostValue,key,canvasTitle])
     return (
       <div className={styles.background}>
         

@@ -445,3 +445,28 @@ color: #000000;
         border: #b3b3b3 1px solid;
         color: #b3b3b3;
     }
+.alertContainer{
+position: absolute;
+top: 3%;
+right: 5%;
+display: flex;
+height: auto;
+z-index: 999999;
+flex-direction: column;
+gap: 30px;
+}
+    .alert{
+
+width: 20vw;
+height: 10vh;
+display: flex;
+background: #F0F3F7;
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 20px;
+font-size: 1vw;
+font-weight: bold;
+justify-content: center;
+align-items: center;
+color: #b5b3b3;
+
+    }
